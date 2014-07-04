@@ -13,7 +13,8 @@
 		var marker = new google.maps.Marker({
 		position: new google.maps.LatLng(-41.2889, 174.7772),
 		map: map,
-		title: 'title'
+		title: 'title',
+		playerId: 1
 		});
 	
 	}
