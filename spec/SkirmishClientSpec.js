@@ -1,6 +1,5 @@
 /*global describe, it, $, spyOn, expect, SkirmishClient, beforeEach */
 "use strict";
-
 describe("SkirmishClient", function () {
     describe('logging in', function () {
         beforeEach(function () {
@@ -33,7 +32,8 @@ describe("SkirmishClient", function () {
                 }
             };
 
-            expect(this.requestArgs.data).toEqual(JSON.stringify(expected_credentials));
+            expect(this.requestArgs.data)
+                .toEqual(JSON.stringify(expected_credentials));
         });
     });
 });
