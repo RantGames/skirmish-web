@@ -20,7 +20,10 @@ var obj = {
 var cities = obj.cities;
 var cityArray = []
 
-for(var i = 0; i < cities.length; i++) {
+
+var processJson = function(){
+	for(var i = 0; i < cities.length; i++) {
 	var city = cities[i];
 	cityArray.push(new City(city.name,city.latLng,city.playerId));
+	};
 };
