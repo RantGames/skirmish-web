@@ -17,13 +17,21 @@ var obj = {
 }
 //TODO sort Ajax call for JSON data
 
-var cities = obj.cities;
-var cityArray = []
+var processJson = function(obj){
+	buildCities;
+	buildCityArray;
 
-
-var processJson = function(){
 	for(var i = 0; i < cities.length; i++) {
-	var city = cities[i];
-	cityArray.push(new City(city.name,city.latLng,city.playerId));
+		var city = cities[i];
+		cityArray.push(new City(city.name,city.latLng,city.playerId));
 	};
+	return cityArray;
 };
+
+var buildCityArray = (function(){
+	return cityArray = [];
+})();
+
+var buildCities = (function(){
+	return cities = obj.cities;
+})();

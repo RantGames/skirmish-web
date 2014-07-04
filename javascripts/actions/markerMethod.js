@@ -1,4 +1,4 @@
-var markerMethod = function(){
+var markerMethod = function(cityArray){
 
 	for(var i = 0; i < cityArray.length; i++){
 		var city = cityArray[i];

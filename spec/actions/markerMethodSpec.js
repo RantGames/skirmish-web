@@ -4,8 +4,11 @@ describe("MarkerMethod", function(){
 	});
 
 	beforeEach(function(){
+		spyOn(google.maps, 'Marker');
 		markerMethod();
 	});
+
+
 
 	xit("will have made maker objects", function(){
 		expect(return).not.toBe(null);
