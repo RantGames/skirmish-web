@@ -10,7 +10,20 @@ var SkirmishClient = (function () {
     function login(e) {
         e.preventDefault();
         console.log('submitting login form');
-        var credentials = $loginForm.serializeObject();
+        var rawCredentials = $loginForm.serializeArray(),
+            credentials,
+            i,
+            cred;
+
+        credentials = {
+            'user': {}
+        };
+
+        for (i = 0; i < rawCredentials.length; i += 1) {
+            cred = rawCredentials[i];
+
+            credentials.user[cred.name] = cred.value;
+        }
 
         console.log(credentials);
 
@@ -27,10 +40,19 @@ var SkirmishClient = (function () {
         });
     }
 
+    function setupAjax() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    }
+
     function start() {
         $loginForm = $('#login-form');
         console.log('starting SkirmishClient');
         $loginForm.on('submit', login);
+        setupAjax();
     }
 
     publicAttributes = {
@@ -51,8 +73,9 @@ $(function () {
 $.fn.serializeObject = function () {
     var o = {},
         a = this.serializeArray();
+
     $.each(a, function () {
-        if (o[this.name]) {
+        if (o[this.name] !== undefined) {
             if (!o[this.name].push) {
                 o[this.name] = [o[this.name]];
             }
