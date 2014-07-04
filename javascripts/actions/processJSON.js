@@ -17,6 +17,17 @@ var obj = {
 }
 //TODO sort Ajax call for JSON data
 
+
+
+
+var buildCityArray = (function(){
+	return cityArray = [];
+})();
+
+var buildCities = (function(){
+	return cities = obj.cities;
+})();
+
 var processJson = function(obj){
 	buildCities;
 	buildCityArray;
@@ -28,10 +39,5 @@ var processJson = function(obj){
 	return cityArray;
 };
 
-var buildCityArray = (function(){
-	return cityArray = [];
-})();
 
-var buildCities = (function(){
-	return cities = obj.cities;
-})();
+
