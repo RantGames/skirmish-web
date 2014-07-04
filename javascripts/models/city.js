@@ -1,6 +1,5 @@
-var City = function(playerId, latLng, name){
-	this.playerId = playerId;
-	this.latLng = latLng;
+var City = function(name, latLng, playerId){
 	this.name = name;
+	this.latLng = latLng;
+	this.playerId = playerId;
 }
-
