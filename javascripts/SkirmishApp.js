@@ -9,7 +9,10 @@ var SkirmishApp = (function () {
     }
 
     function start() {
-        SkirmishDOM.$loginForm.on('submit', login);
+        SkirmishDOM.$loginForm.on('submit', function (e) {
+            e.preventDefault();
+            login();
+        });
     }
 
     publicAttributes = {
