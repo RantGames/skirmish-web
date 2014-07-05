@@ -1,7 +1,7 @@
 var SkirmishMap = (function(){
 
+	var map;
 	function initialize() {
-		var map;
 		var mapOptions;
 		mapOptions = {
 		  center: new google.maps.LatLng(-41.2889, 174.7772),
@@ -18,7 +18,6 @@ var SkirmishMap = (function(){
 			title: city.name,
 			playerId: city.playerId
 		});
-		console.log("hell0");
 	};
 
 	var displayCities = function(cities){
