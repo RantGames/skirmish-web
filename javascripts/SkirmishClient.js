@@ -9,7 +9,7 @@ var SkirmishClient = (function () {
         login: '/users/sign_in'
     };
 
-    function login(email, password) {
+    function login(email, password, successCallback) {
         var credentials = {
             user: {
                 email: email,
@@ -23,7 +23,8 @@ var SkirmishClient = (function () {
             data: JSON.stringify(credentials),
             type: 'POST',
             contentType: 'application/json',
-            dataType:  'json'
+            dataType:  'json',
+            success: successCallback
         });
     }
 

@@ -21,15 +21,15 @@ describe("SkirmishApp", function () {
                 return that.fakeCredentials;
             });
             spyOn(SkirmishClient, 'login');
-
-            SkirmishApp.login();
         });
 
         it('gets credentials from SkirmishDOM', function () {
+            SkirmishApp.login();
             expect(SkirmishDOM.getLoginCredentials).toHaveBeenCalled();
         });
 
         it('logs in to SkirmishClient', function () {
+            SkirmishApp.login();
             expect(SkirmishClient.login).toHaveBeenCalledWith(this.fakeCredentials.email, this.fakeCredentials.password);
         });
     });
