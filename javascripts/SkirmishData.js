@@ -15,5 +15,4 @@ var SkirmishData = (function(){
 		processJson: processJson
 	}
 
-
 })();

@@ -10,11 +10,14 @@ describe("SkirmishMap", function(){
 		});
 	});
 
-	it("Displays a list of cities", function(){
-		spyOn(SkirmishMap, "displayCity");
-		SkirmishMap.displayCities([1,2,3]);
-		console.log(SkirmishMap.displayCity.calls.count());
-		expect(3).toBe(3);
-	});
+	describe("display cities", function(){
+		it("displays cities", function(){
+			spyOn(SkirmishMap, "displayCity");
+			this.cities = [1,2,3];
+			SkirmishMap.displayCities(this.cities);
+			expect(SkirmishMap.displayCity).toHaveBeenCalled();
+		});
 
+	});
+	
 });
