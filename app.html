@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <head>
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <link rel="stylesheet" type="text/css" href="/skirmish-web/stylesheets/mapstylesheet.css"></link>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCN2PiTo4aePWultR2fsm9hOMZNZ5qvwJE">
-    </script>
-
-
+    <meta charset="UTF-8">
 </head>
-
 <body>
-	<div id="map-canvas"/>
+    <div>
+        <form id="login-form" action=''>
+            <input type="email" name="email" required placeholder="Email">
+            <input type="password" name="password" required placeholder="Password">
+            <input type="hidden" name="remember_me" value="0">
+            <input id="submit-login" type="submit" value="Login">
+        </form>
+    </div>
 </body>
 
-
-<script src="/skirmish-web/javascripts/models/city.js" type="text/javascript"></script>
-<script src="/skirmish-web/javascripts/SkirmishMap.js" type="text/javascript"></script>
-<script src="/skirmish-web/javascripts/SkirmishData.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+<script src="/skirmish-web/javascripts/SkirmishClient.js" type="text/javascript"></script>
+<script src="/skirmish-web/javascripts/SkirmishDOM.js" type="text/javascript"></script>
+<script src="/skirmish-web/javascripts/SkirmishApp.js" type="text/javascript"></script>
 <script src="/skirmish-web/javascripts/app.js" type="text/javascript"></script>
 
