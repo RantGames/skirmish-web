@@ -1,5 +1,16 @@
 var SkirmishMap = (function(){
-	
+
+	function initialize() {
+		var map;
+		var mapOptions;
+		mapOptions = {
+		  center: new google.maps.LatLng(-41.2889, 174.7772),
+		  zoom: 10
+		};
+		map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	};
+	google.maps.event.addDomListener(window, 'load', initialize);
+
 	var displayCity = function(city){
 		new google.maps.Marker({
 			position: new google.maps.LatLng(city.latLng[0], city.latLng[1]),
@@ -7,6 +18,7 @@ var SkirmishMap = (function(){
 			title: city.name,
 			playerId: city.playerId
 		});
+		console.log("hell0");
 	};
 
 	var displayCities = function(cities){
@@ -15,18 +27,6 @@ var SkirmishMap = (function(){
 			SkirmishMap.displayCity(city);
 		};
 	};
-
-	var map;
-	var mapOptions;
-
-	function initialize() {
-		mapOptions = {
-		  center: new google.maps.LatLng(-41.2889, 174.7772),
-		  zoom: 10
-		};
-		map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-	}
-	
 
 	return	{
 		displayCity: displayCity,
