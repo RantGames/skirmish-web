@@ -1,10 +1,11 @@
-/*global $, jQuery, alert, SkirmishDOM*/
+/*global $, jQuery, alert, SkirmishDOM, SkirmishClient */
 "use strict";
 var SkirmishApp = (function () {
     var publicAttributes;
 
     function login() {
-
+        var credentials = SkirmishDOM.getLoginCredentials();
+        SkirmishClient.login(credentials.email, credentials.password);
     }
 
     function start() {
