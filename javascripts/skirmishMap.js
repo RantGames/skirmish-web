@@ -1,7 +1,5 @@
 var SkirmishMap = (function(){
-	//public
-// display cities
-
+	
 	var displayCity = function(city){
 		new google.maps.Marker({
 			position: new google.maps.LatLng(city.latLng[0], city.latLng[1]),
