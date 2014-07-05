@@ -3,11 +3,17 @@
 
 var SkirmishDOM = (function () {
     var $loginForm = $('#login-form');
+
+    function hideLoginForm() {
+        $loginForm.hide();
+    }
+
     function getLoginCredentials() {
         throw "Not Implemented";
     }
     return {
         getLoginCredentials: getLoginCredentials,
-        $loginForm: $loginForm
+        $loginForm: $loginForm,
+        hideLoginForm: hideLoginForm
     };
 }());

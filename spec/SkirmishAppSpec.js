@@ -1,4 +1,4 @@
-/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishDOM, SkirmishClient */
+/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishDOM, SkirmishClient, jasmine */
 "use strict";
 describe("SkirmishApp", function () {
     describe('start()', function () {
@@ -20,17 +20,35 @@ describe("SkirmishApp", function () {
             spyOn(SkirmishDOM, 'getLoginCredentials').and.callFake(function () {
                 return that.fakeCredentials;
             });
-            spyOn(SkirmishClient, 'login');
         });
 
-        it('gets credentials from SkirmishDOM', function () {
-            SkirmishApp.login();
-            expect(SkirmishDOM.getLoginCredentials).toHaveBeenCalled();
+        describe('credential flow', function () {
+            beforeEach(function () {
+                spyOn(SkirmishClient, 'login');
+            });
+
+            it('gets credentials from SkirmishDOM', function () {
+                SkirmishApp.login();
+                expect(SkirmishDOM.getLoginCredentials).toHaveBeenCalled();
+            });
+
+            it('logs in to SkirmishClient', function () {
+                SkirmishApp.login();
+                expect(SkirmishClient.login).toHaveBeenCalledWith(this.fakeCredentials.email, this.fakeCredentials.password, jasmine.any(Function));
+            });
         });
 
-        it('logs in to SkirmishClient', function () {
+
+        it('hides the login form if login was successful', function () {
+            spyOn(SkirmishDOM, 'hideLoginForm');
+
+            spyOn(SkirmishClient, 'login').and.callFake(function (e, p, successfulCallback) {
+                successfulCallback();
+            });
+
             SkirmishApp.login();
-            expect(SkirmishClient.login).toHaveBeenCalledWith(this.fakeCredentials.email, this.fakeCredentials.password);
+
+            expect(SkirmishDOM.hideLoginForm).toHaveBeenCalled();
         });
     });
 });

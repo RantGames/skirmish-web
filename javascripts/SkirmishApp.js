@@ -5,7 +5,7 @@ var SkirmishApp = (function () {
 
     function login() {
         var credentials = SkirmishDOM.getLoginCredentials();
-        SkirmishClient.login(credentials.email, credentials.password);
+        SkirmishClient.login(credentials.email, credentials.password, SkirmishDOM.hideLoginForm);
     }
 
     function start() {
