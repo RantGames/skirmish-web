@@ -1,7 +1,21 @@
 <!DOCTYPE html>
 <head>
+    <meta charset="UTF-8">
 </head>
 <body>
+    <div>
+        <form id="login-form" action=''>
+            <input type="email" name="email" required placeholder="Email">
+            <input type="password" name="password" required placeholder="Password">
+            <input type="hidden" name="remember_me" value="0">
+            <input id="submit-login" type="submit" value="Login">
+        </form>
+    </div>
 </body>
 
-<script src="javascripts/app.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+<script src="/skirmish-web/javascripts/SkirmishClient.js" type="text/javascript"></script>
+<script src="/skirmish-web/javascripts/SkirmishDOM.js" type="text/javascript"></script>
+<script src="/skirmish-web/javascripts/SkirmishApp.js" type="text/javascript"></script>
+<script src="/skirmish-web/javascripts/app.js" type="text/javascript"></script>
+
