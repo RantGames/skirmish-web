@@ -51,6 +51,16 @@ describe("SkirmishClient", function () {
 
                 expect(this.success).toHaveBeenCalled();
             });
+
+            it('calls the failure callback on failure', function () {
+                spyOn($, 'ajax').and.callFake(function (params) {
+                    params.error({ success: false });
+                });
+
+                SkirmishClient.login('neo@matr.ix', 'swordfish', this.success, this.failure);
+
+                expect(this.failure).toHaveBeenCalled();
+            });
         });
     });
 });
