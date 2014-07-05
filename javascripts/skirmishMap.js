@@ -12,12 +12,12 @@ var SkirmishMap = (function(){
 	google.maps.event.addDomListener(window, 'load', initialize);
 
 	var displayCity = function(city){
-		var iconBase = '/skirmish-web/images/icons/';
+		var iconBase = 'http://www.gravatar.com/avatar/';
 		new google.maps.Marker({
 			position: new google.maps.LatLng(city.latLng[0], city.latLng[1]),
 			map: map,
 			title: city.name + ' ' + city.playerId,
-			icon: iconBase + 'soldier-1.png', 
+			icon: iconBase + '205e460b479e2e5b48aec07710c08d50?s=20', 
 			playerId: city.playerId
 		});
 	};
