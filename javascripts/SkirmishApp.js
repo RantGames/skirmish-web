@@ -1,5 +1,6 @@
-/*global $, jQuery, alert, SkirmishDOM, SkirmishClient */
+/*global $, jQuery, alert, SkirmishDOM, SkirmishClient, SkirmishMap */
 "use strict";
+
 var SkirmishApp = (function () {
     var publicAttributes;
 
