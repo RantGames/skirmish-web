@@ -9,7 +9,7 @@ var SkirmishMoves = (function () {
         this.moves.push(move);
     };
 
-    publik.Move = function(args) {
+    publik.BaseMove = function (args) {
         this.origin_ids = args.origin_ids;
         this.target_id = args.target_id;
         this.action = args.action;

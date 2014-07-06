@@ -8,7 +8,7 @@ describe("SkirmishMoves", function () {
         expect(SkirmishMoves.moves).toContain(move);
     });
 
-    describe('.Move', function () {
+    describe('.BaseMove', function () {
         beforeEach(function () {
             this.rawMove = {
                 origin_ids: [1, 2, 3],
@@ -16,7 +16,7 @@ describe("SkirmishMoves", function () {
                 action: 'attack_unit'
             };
 
-            this.move = new SkirmishMoves.Move(this.rawMove);
+            this.move = new SkirmishMoves.BaseMove(this.rawMove);
         });
 
         it('sets the origin_ids', function () {
