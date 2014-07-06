@@ -1,4 +1,4 @@
-/*global $, jQuery, alert, SkirmishDOM, SkirmishClient, SkirmishMap */
+/*global $, jQuery, alert, SkirmishDOM, SkirmishClient, SkirmishMap, SkirmishGameProcessor */
 "use strict";
 
 var SkirmishApp = (function () {
@@ -17,7 +17,10 @@ var SkirmishApp = (function () {
     }
 
     function updateGameState() {
-        var game = SkirmishClient.pullGameState();
+        var game = SkirmishClient.pullGameState(),
+            cities = SkirmishGameProcessor.processCities(game);
+
+        SkirmishMap.displayCities(cities);
     }
 
     publicAttributes = {
@@ -44,3 +47,10 @@ var SkirmishApp = (function () {
 //   pull credentials from skirmishdom
 //   send them to SkirmishClient.login
 //   update the dom with the result
+//
+// updateGameState()
+//  pulls game state from SkirmishClient
+//  asks SkirmishGameProcessor to process the game into workable game data
+//  displays all the cities
+// 
+// 

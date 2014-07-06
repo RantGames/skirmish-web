@@ -1,4 +1,4 @@
-/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishDOM, SkirmishClient, jasmine */
+/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishDOM, SkirmishClient, SkirmishGameProcessor, jasmine */
 "use strict";
 describe("SkirmishApp", function () {
     describe('login()', function () {
@@ -46,12 +46,27 @@ describe("SkirmishApp", function () {
     });
 
     describe('updateGameState()', function () {
-        it('gets data from SkirmishClient#pullGameState', function () {
-            spyOn(SkirmishClient, 'pullGameState');
+        beforeEach(function () {
 
+            this.rawGame = jasmine.createSpy('raw game data');
+            this.processedCities = jasmine.createSpy('processed cities');
+
+            spyOn(SkirmishClient, 'pullGameState').and.returnValue(this.rawGame);
+            spyOn(SkirmishGameProcessor, 'processCities').and.returnValue(this.processedCities);
+            spyOn(SkirmishMap, 'displayCities');
             SkirmishApp.updateGameState();
+        });
 
+        it('gets data from SkirmishClient#pullGameState', function () {
             expect(SkirmishClient.pullGameState).toHaveBeenCalled();
+        });
+
+        it('asks SkirmishGameProcessor to process the cities from the raw data', function () {
+            expect(SkirmishGameProcessor.processCities).toHaveBeenCalledWith(this.rawGame);
+        });
+
+        it('asks SkirmishMap to render the cities', function () {
+            expect(SkirmishMap.displayCities).toHaveBeenCalledWith(this.processedCities);
         });
     });
 });
