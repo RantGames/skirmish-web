@@ -2,11 +2,8 @@
 "use strict";
 
 describe("SkirmishGameProcessor", function () {
-    it('can process raw game data into cities', function () {
-        var gameDump,
-            cities;
-
-        gameDump = {
+    beforeEach(function () {
+        this.gameState = {
             game: {
                 id: 1,
                 players: [
@@ -34,9 +31,25 @@ describe("SkirmishGameProcessor", function () {
                 ]
             }
         };
+    });
 
-        cities = SkirmishGameProcessor.processCities(gameDump);
+    describe('processCities', function () {
+        beforeEach(function () {
+            var cities = SkirmishGameProcessor.processCities(this.gameState);
+            this.city = cities[0];
+        });
 
-        expect(cities[0]).toEqual(new City('123 Fake St', [33.5091667, -111.8983333], 2));
+        it('sets the city name', function () {
+            expect(this.city.name).toBe('123 Fake St');
+        });
+
+        it('sets the city coordinates', function () {
+            expect(this.city.latLng).toEqual([33.5091667, -111.8983333]);
+        });
+
+        it("sets the city's player id", function () {
+            expect(this.city.playerId).toBe(2);
+        });
+
     });
 });
