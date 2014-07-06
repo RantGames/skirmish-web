@@ -84,8 +84,12 @@ describe("SkirmishApp", function () {
                 targetId: 2,
             };
             spyOn(SkirmishDOM, 'getTestMove').and.returnValue(testMove);
-            spyOn(SkirmishApp, 'getUnitIdsForCity');
-            SkirmishApp.sendMove();
+            this.fakeUnitIds = [4, 5, 6];
+
+            spyOn(SkirmishApp, 'getUnitIdsForCity').and.returnValue(this.fakeUnitIds);
+            spyOn(SkirmishClient, 'sendMove');
+
+            SkirmishApp.sendMove('move_unit');
         });
 
         it("gets the move data from SkirmishDOM", function () {
@@ -94,6 +98,14 @@ describe("SkirmishApp", function () {
 
         it("gets the ids of the units to move", function () {
             expect(SkirmishApp.getUnitIdsForCity).toHaveBeenCalledWith({city: 1, unitCount: 5});
+        });
+
+        it("sends the move to SkirmishClient to send to the server", function () {
+            expect(SkirmishClient.sendMove).toHaveBeenCalledWith({
+                originIds: this.fakeUnitIds,
+                targetId: 2,
+                action: 'move_unit',
+            });
         });
     });
 });

@@ -38,12 +38,16 @@ var SkirmishClient = (function () {
             success: successCallback,
             error: errorCallback,
         });
+    }
 
+    function sendMove(move) {
+        throw 'SkirmishClient#sendMove not implemented';
     }
 
     publicAttributes = {
         login: login,
         pullGameState: pullGameState,
+        sendMove: sendMove,
     };
 
     return publicAttributes;

@@ -9,8 +9,22 @@ var SkirmishApp = (function () {
         SkirmishClient.login(credentials.email, credentials.password, SkirmishDOM.hideLoginForm);
     }
 
-    function moveUnits() {
-        throw 'not implemented';
+    function sendMove() {
+        var rawMove,
+            unitIds;
+
+        rawMove = SkirmishDOM.getTestMove();
+
+        unitIds = SkirmishApp.getUnitIdsForCity({
+            unitCount: rawMove.unitCount,
+            city: rawMove.originId,
+        });
+
+        SkirmishClient.sendMove({
+            originIds: unitIds,
+            targetId: rawMove.targetId,
+            action: 'move_unit'
+        });
     }
 
     function start() {
@@ -21,7 +35,7 @@ var SkirmishApp = (function () {
 
         SkirmishDOM.$testMoveForm.on('submit', function (e) {
             e.preventDefault();
-            moveUnits();
+            sendMove();
         });
     }
 
@@ -37,16 +51,8 @@ var SkirmishApp = (function () {
         SkirmishClient.pullGameState(successfulPull);
     }
 
-    function sendMove() {
-        var rawMove = SkirmishDOM.getTestMove();
-        SkirmishApp.getUnitIdsForCity({
-            unitCount: rawMove.unitCount,
-            city: rawMove.originId,
-        });
-    }
-
     function getUnitIdsForCity() {
-        throw 'not implemented';
+        throw 'not implemented getUnitIdsForCity';
     }
 
     publicAttributes = {
@@ -54,7 +60,6 @@ var SkirmishApp = (function () {
         login: login,
         updateGameState: updateGameState,
         successfulPull: successfulPull,
-        moveUnits: moveUnits,
         sendMove: sendMove,
         getUnitIdsForCity: getUnitIdsForCity
     };
