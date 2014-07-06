@@ -9,10 +9,19 @@ var SkirmishApp = (function () {
         SkirmishClient.login(credentials.email, credentials.password, SkirmishDOM.hideLoginForm);
     }
 
+    function moveUnits() {
+        throw 'not implemented';
+    }
+
     function start() {
         SkirmishDOM.$loginForm.on('submit', function (e) {
             e.preventDefault();
             login();
+        });
+
+        SkirmishDOM.$testMoveForm.on('submit', function (e) {
+            e.preventDefault();
+            moveUnits();
         });
     }
 
@@ -28,11 +37,17 @@ var SkirmishApp = (function () {
         SkirmishClient.pullGameState(successfulPull);
     }
 
+    function sendMove() {
+        var rawMove = SkirmishDOM.getTestMove();
+    }
+
     publicAttributes = {
         start: start,
         login: login,
         updateGameState: updateGameState,
-        successfulPull: successfulPull
+        successfulPull: successfulPull,
+        moveUnits: moveUnits,
+        sendMove: sendMove,
     };
 
     return publicAttributes;

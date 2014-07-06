@@ -3,6 +3,7 @@
 
 var SkirmishDOM = (function () {
     var $loginForm = $('#login-form');
+    var $testMoveForm = $('#test-move-form');
 
     function getLoginFormValue(name) {
         //  TODO: fix ickyness here. Have to refer to SkirmishDOM.$loginForm to allow mocking.
@@ -21,9 +22,15 @@ var SkirmishDOM = (function () {
         };
     }
 
+    function getTestMove() {
+        throw 'not impmemented';
+    }
+
     return {
         getLoginCredentials: getLoginCredentials,
         $loginForm: $loginForm,
+        $testMoveForm: $testMoveForm,
+        getTestMove: getTestMove,
         hideLoginForm: hideLoginForm
     };
 }());

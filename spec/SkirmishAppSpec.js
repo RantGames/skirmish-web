@@ -75,4 +75,15 @@ describe("SkirmishApp", function () {
             });
         });
     });
+
+    describe("sendMove()", function () {
+        beforeEach(function () {
+            spyOn(SkirmishDOM, 'getTestMove');
+        });
+
+        it("gets the move data from SkirmishDOM", function () {
+            SkirmishApp.sendMove();
+            expect(SkirmishDOM.getTestMove).toHaveBeenCalled();
+        });
+    });
 });
