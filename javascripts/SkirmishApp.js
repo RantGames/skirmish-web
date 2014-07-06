@@ -16,9 +16,14 @@ var SkirmishApp = (function () {
         });
     }
 
+    function updateGameState() {
+        var game = SkirmishClient.pullGameState();
+    }
+
     publicAttributes = {
         start: start,
-        login: login
+        login: login,
+        updateGameState: updateGameState,
     };
 
     return publicAttributes;

@@ -44,4 +44,14 @@ describe("SkirmishApp", function () {
             expect(SkirmishDOM.hideLoginForm).toHaveBeenCalled();
         });
     });
+
+    describe('updateGameState()', function () {
+        it('gets data from SkirmishClient#pullGameState', function () {
+            spyOn(SkirmishClient, 'pullGameState');
+
+            SkirmishApp.updateGameState();
+
+            expect(SkirmishClient.pullGameState).toHaveBeenCalled();
+        });
+    });
 });
