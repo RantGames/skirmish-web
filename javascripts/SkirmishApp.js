@@ -42,7 +42,9 @@ var SkirmishApp = (function () {
     publik.successfulPull = function (gameState) {
         var cities;
 
-        cities = SkirmishGameState.processCities(gameState);
+        SkirmishGameState.process(gameState);
+
+        cities = SkirmishGameState.cities();
 
         SkirmishMap.displayCities(cities);
     };

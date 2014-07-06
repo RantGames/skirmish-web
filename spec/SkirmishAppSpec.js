@@ -56,7 +56,8 @@ describe("SkirmishApp", function () {
             spyOn(SkirmishClient, 'pullGameState').and.callFake(function (successfulCallback) {
                 successfulCallback(that.rawGame);
             });
-            spyOn(SkirmishGameState, 'processCities').and.returnValue(this.processedCities);
+            spyOn(SkirmishGameState, 'process');
+            spyOn(SkirmishGameState, 'cities').and.returnValue(this.processedCities);
             spyOn(SkirmishMap, 'displayCities');
             SkirmishApp.updateGameState();
         });
@@ -66,8 +67,12 @@ describe("SkirmishApp", function () {
         });
 
         describe('Successful Pull', function () {
-            it('asks SkirmishGameState to process the cities from the raw data', function () {
-                expect(SkirmishGameState.processCities).toHaveBeenCalledWith(this.rawGame);
+            it('asks SkirmishGameState to process the new game state', function () {
+                expect(SkirmishGameState.process).toHaveBeenCalledWith(this.rawGame);
+            });
+
+            it('gets the cities from SkirmishGameState', function () {
+                expect(SkirmishGameState.cities).toHaveBeenCalled();
             });
 
             it('asks SkirmishMap to render the cities', function () {

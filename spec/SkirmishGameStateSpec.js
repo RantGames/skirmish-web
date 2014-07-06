@@ -33,36 +33,53 @@ describe("SkirmishGameState", function () {
         };
     });
 
-    describe('processCities', function () {
+    describe('processing gamestate', function () {
         beforeEach(function () {
-            var cities = SkirmishGameState.processCities(this.gameState);
-            this.city = cities[0];
+            console.log(SkirmishGameState.game);
+            SkirmishGameState.process(this.gameState);
+            console.log(SkirmishGameState.game);
+            this.city = SkirmishGameState.game.cities[0];
         });
 
-        it('sets the city name', function () {
-            expect(this.city.name).toBe('123 Fake St');
+        describe('processing cities', function () {
+            it('sets the city name', function () {
+                expect(this.city.name).toBe('123 Fake St');
+            });
+
+            it('sets the city coordinates', function () {
+                expect(this.city.latLng).toEqual([33.5091667, -111.8983333]);
+            });
+
+            it("sets the city's player id", function () {
+                expect(this.city.playerId).toBe(2);
+            });
+
+            it("populates the city with units", function () {
+                expect(this.city.units).toEqual(
+                    [
+                        {
+                            id: 1,
+                            unit_type: "infantry",
+                            attack: 1,
+                            defense: 1
+                        }
+                    ]
+                );
+            });
+        });
+    });
+
+    describe('cities()', function () {
+        beforeEach(function () {
+            this.mockCity = jasmine.createSpy('fake city');
+            SkirmishGameState.game = {
+                cities: [this.mockCity]
+            };
         });
 
-        it('sets the city coordinates', function () {
-            expect(this.city.latLng).toEqual([33.5091667, -111.8983333]);
+        it('returns the cities in the processed gamestate', function () {
+            console.log(SkirmishGameState.cities());
+            expect(SkirmishGameState.cities()).toContain(this.mockCity);
         });
-
-        it("sets the city's player id", function () {
-            expect(this.city.playerId).toBe(2);
-        });
-
-        it("populates the city with units", function () {
-            expect(this.city.units).toEqual(
-                [
-                    {
-                        id: 1,
-                        unit_type: "infantry",
-                        attack: 1,
-                        defense: 1
-                    }
-                ]
-            );
-        });
-
     });
 });
