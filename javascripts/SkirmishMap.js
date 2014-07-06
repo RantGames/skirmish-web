@@ -21,8 +21,8 @@ var SkirmishMap = (function () {
         return new google.maps.Marker({
             position: new google.maps.LatLng(city.latLng[0], city.latLng[1]),
             map: map,
-            title: city.name + ' ' + city.playerId,
-            icon: iconBase + '205e460b479e2e5b48aec07710c08d50?s=50',
+            title: city.name + ' Player: ' + city.playerId + ', Units: ' + city.units.length,
+            icon: iconBase + city.playerId + '?s=40&d=retro',
             playerId: city.playerId
         });
     }
