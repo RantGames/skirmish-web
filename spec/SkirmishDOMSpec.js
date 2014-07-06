@@ -29,7 +29,6 @@ describe("SkirmishDOM", function () {
             });
 
             it('pulls out the number of units', function () {
-                console.log(this.testMove);
                 expect(this.testMove.unitCount).toEqual(3);
             });
 

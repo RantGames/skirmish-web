@@ -7,6 +7,18 @@ var SkirmishGameState = (function () {
 
     publik.game = {};
 
+    function getCity(id) {
+        var i,
+            city;
+
+        for (i = 0; i < publik.game.cities.length; i += 1) {
+            city = publik.game.cities[i];
+            if (city.id === id) {
+                return city;
+            }
+        }
+    }
+
     publik.process = function (gameState) {
         // TODO: refactor to abide by SOLID
         //  suggestion, break out method for creating city from iteration work
@@ -42,8 +54,17 @@ var SkirmishGameState = (function () {
         publik.game.cities = cities;
     };
 
-    publik.getUnitIdsForCity = function () {
-        throw 'not implemented getUnitIdsForCity';
+    publik.getUnitIdsForCity = function (args) {
+        var unitCount,
+            targetCityId,
+            city;
+
+        unitCount = args.unitCount;
+        targetCityId = args.city;
+
+        city = getCity(targetCityId);
+
+        return city.units.slice(0, unitCount + 1).map(function (unit) { return unit.id; });
     };
 
     publik.cities = function () {

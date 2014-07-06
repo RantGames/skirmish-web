@@ -35,9 +35,7 @@ describe("SkirmishGameState", function () {
 
     describe('processing gamestate', function () {
         beforeEach(function () {
-            console.log(SkirmishGameState.game);
             SkirmishGameState.process(this.gameState);
-            console.log(SkirmishGameState.game);
             this.city = SkirmishGameState.game.cities[0];
         });
 
@@ -78,8 +76,37 @@ describe("SkirmishGameState", function () {
         });
 
         it('returns the cities in the processed gamestate', function () {
-            console.log(SkirmishGameState.cities());
             expect(SkirmishGameState.cities()).toContain(this.mockCity);
+        });
+    });
+
+    describe('getUnitIdForCity()', function () {
+        it('returns a list of units ids for the given city', function () {
+            SkirmishGameState.game = {
+                cities: [
+                    {
+                        id: 1,
+                        units: [
+                            {
+                                id: 1
+                            },
+                            {
+                                id: 2,
+                            },
+                            {
+                                id: 6,
+                            },
+                        ]
+                    }
+                ]
+            };
+
+            var unitIds = SkirmishGameState.getUnitIdsForCity({
+                unitCount: 3,
+                city: 1,
+            });
+
+            expect(unitIds).toEqual([1, 2, 6]);
         });
     });
 });
