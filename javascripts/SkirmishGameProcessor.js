@@ -10,6 +10,8 @@ var SkirmishGameProcessor = (function () {
             cities = [],
             i,
             j,
+            k,
+            unit,
             city_model,
             game;
 
@@ -22,6 +24,11 @@ var SkirmishGameProcessor = (function () {
                 city = player.cities[j];
 
                 city_model = new City(city.name, [city.latitude, city.longitude], player.id);
+
+                for (k = 0; k < city.units.length; k += 1) {
+                    unit = city.units[i];
+                    city_model.addUnit(unit);
+                }
 
                 cities.push(city_model);
             }

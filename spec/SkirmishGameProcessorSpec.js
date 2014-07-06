@@ -51,5 +51,18 @@ describe("SkirmishGameProcessor", function () {
             expect(this.city.playerId).toBe(2);
         });
 
+        it("populates the city with units", function () {
+            expect(this.city.units).toEqual(
+                [
+                    {
+                        id: 1,
+                        unit_type: "infantry",
+                        attack: 1,
+                        defense: 1
+                    }
+                ]
+            );
+        });
+
     });
 });
