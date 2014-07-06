@@ -16,17 +16,23 @@ var SkirmishApp = (function () {
         });
     }
 
-    function updateGameState() {
-        var game = SkirmishClient.pullGameState(),
-            cities = SkirmishGameProcessor.processCities(game);
+    function successfulPull(gameState) {
+        var cities;
+
+        cities = SkirmishGameProcessor.processCities(gameState);
 
         SkirmishMap.displayCities(cities);
+    }
+
+    function updateGameState() {
+        SkirmishClient.pullGameState(successfulPull);
     }
 
     publicAttributes = {
         start: start,
         login: login,
         updateGameState: updateGameState,
+        successfulPull: successfulPull
     };
 
     return publicAttributes;

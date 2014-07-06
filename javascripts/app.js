@@ -4,4 +4,5 @@
 $(document).ready(function () {
     SkirmishMap.initialize();
     SkirmishApp.start();
+    SkirmishApp.updateGameState();
 });

@@ -17,7 +17,7 @@ var SkirmishMap = (function () {
             position: new google.maps.LatLng(city.latLng[0], city.latLng[1]),
             map: map,
             title: city.name + ' ' + city.playerId,
-            icon: iconBase + '205e460b479e2e5b48aec07710c08d50?s=20',
+            icon: iconBase + '205e460b479e2e5b48aec07710c08d50?s=50',
             playerId: city.playerId
         });
     };
