@@ -10,7 +10,7 @@ var SkirmishClient = (function () {
         show_game_state: '/game_state/show'
     };
 
-    function login(email, password, successCallback, failureCallback) {
+    function login(email, password, successCallback, errorCallback) {
         var credentials = {
             user: {
                 email: email,
@@ -26,15 +26,17 @@ var SkirmishClient = (function () {
             contentType: 'application/json',
             dataType:  'json',
             success: successCallback,
-            error: failureCallback
+            error: errorCallback
         });
     }
 
-    function pullGameState() {
+    function pullGameState(successCallback, errorCallback) {
         $.ajax({
             type: 'GET',
             url: endpoints.show_game_state,
             dataType: 'json',
+            success: successCallback,
+            error: errorCallback,
         });
 
     }
