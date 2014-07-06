@@ -2,14 +2,14 @@
 "use strict";
 
 var SkirmishApp = (function () {
-    var publicAttributes;
+    var publik = {};
 
-    function login() {
+    publik.login = function () {
         var credentials = SkirmishDOM.getLoginCredentials();
         SkirmishClient.login(credentials.email, credentials.password, SkirmishDOM.hideLoginForm);
-    }
+    };
 
-    function sendMove() {
+    publik.sendMove = function () {
         var rawMove,
             unitIds;
 
@@ -25,46 +25,37 @@ var SkirmishApp = (function () {
             targetId: rawMove.targetId,
             action: 'move_unit'
         });
-    }
+    };
 
-    function start() {
+    publik.start = function () {
         SkirmishDOM.$loginForm.on('submit', function (e) {
             e.preventDefault();
-            login();
+            publik.login();
         });
 
         SkirmishDOM.$testMoveForm.on('submit', function (e) {
             e.preventDefault();
-            sendMove();
+            publik.sendMove();
         });
-    }
+    };
 
-    function successfulPull(gameState) {
+    publik.successfulPull = function (gameState) {
         var cities;
 
         cities = SkirmishGameProcessor.processCities(gameState);
 
         SkirmishMap.displayCities(cities);
-    }
-
-    function updateGameState() {
-        SkirmishClient.pullGameState(successfulPull);
-    }
-
-    function getUnitIdsForCity() {
-        throw 'not implemented getUnitIdsForCity';
-    }
-
-    publicAttributes = {
-        start: start,
-        login: login,
-        updateGameState: updateGameState,
-        successfulPull: successfulPull,
-        sendMove: sendMove,
-        getUnitIdsForCity: getUnitIdsForCity
     };
 
-    return publicAttributes;
+    publik.updateGameState = function () {
+        SkirmishClient.pullGameState(publik.successfulPull);
+    };
+
+    publik.getUnitIdsForCity = function () {
+        throw 'not implemented getUnitIdsForCity';
+    };
+
+    return publik;
 }());
 
 
