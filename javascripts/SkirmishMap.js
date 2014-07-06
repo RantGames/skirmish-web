@@ -37,10 +37,38 @@ var SkirmishMap = (function () {
         }
     }
 
+    function CityOverlay(city) {
+        this.city = city;
+        this.setMap(map);
+    }
+
+    CityOverlay.prototype = new google.maps.OverlayView; //subclassing google's overlayView
+
+    CityOverlay.prototype.onAdd = function () {
+        this.overlay = $('<div class="city-overlay">' + this.city.name + '</div>');
+        this.overlay.className = 'city-overlay';
+        this.getPanes().overlayImage.appendChild(this.overlay); //attach it to overlay panes so it behaves like markers
+    };
+
+    CityOverlay.prototype.onRemove = function () {
+        this.overlay.remove();
+    };
+
+    CityOverlay.prototype.draw = function () {
+        var position = this.getProjection().fromLatLngToDivPixel(this.get('position')); // translate map latLng coords into DOM px coords for css positioning
+        this.overlay.css({
+            'top'   : position.y + 'px',
+            'left'  : position.x + 'px'
+        });
+    };
+
+
+
     return {
         displayCity: displayCity,
         displayCities: displayCities,
-        initialize: initialize
+        initialize: initialize,
+        CityOverlay: CityOverlay,
     };
 
 }());
