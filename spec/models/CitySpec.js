@@ -3,7 +3,7 @@
 
 describe("City model", function () {
     beforeEach(function () {
-        this.city = new City("London", [123, 556], 4);
+        this.city = new City("London", [123, 556], 4, 6);
     });
 
     it("City object is created with name", function () {
@@ -16,6 +16,10 @@ describe("City model", function () {
 
     it("City object has a player ID", function () {
         expect(this.city.playerId).toEqual(4);
+    });
+
+    it("City object has an ID", function () {
+        expect(this.city.id).toBe(6);
     });
 
     it("Can add a unit", function () {

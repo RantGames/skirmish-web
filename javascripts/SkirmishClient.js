@@ -41,6 +41,7 @@ var SkirmishClient = (function () {
     }
 
     function sendMove(move) {
+        console.log(move);
         throw 'SkirmishClient#sendMove not implemented';
     }
 
