@@ -12,7 +12,7 @@ describe("SkirmishGameState", function () {
                         name: "Test",
                         cities: [
                             {
-                                id: 1,
+                                id: 6,
                                 name: "123 Fake St",
                                 latitude: 33.5091667,
                                 longitude: -111.8983333,
@@ -50,6 +50,10 @@ describe("SkirmishGameState", function () {
 
             it("sets the city's player id", function () {
                 expect(this.city.playerId).toBe(2);
+            });
+
+            it("sets the city's id", function () {
+                expect(this.city.id).toBe(6);
             });
 
             it("populates the city with units", function () {

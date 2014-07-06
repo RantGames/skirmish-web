@@ -40,7 +40,7 @@ var SkirmishGameState = (function () {
             for (j = 0; j < player.cities.length; j += 1) {
                 city = player.cities[j];
 
-                city_model = new City(city.name, [city.latitude, city.longitude], player.id);
+                city_model = new City(city.name, [city.latitude, city.longitude], player.id, city.id);
 
                 for (k = 0; k < city.units.length; k += 1) {
                     unit = city.units[i];
