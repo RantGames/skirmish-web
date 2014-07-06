@@ -18,4 +18,17 @@ describe("City model", function () {
         expect(this.city.playerId).toEqual(4);
     });
 
+    it("Can add a unit", function () {
+        var unit = {
+            id: 1,
+            unit_type: "infantry",
+            attack: 1,
+            defense: 1
+        };
+
+        this.city.addUnit(unit);
+
+        expect(this.city.units).toContain(unit);
+    });
+
 });
