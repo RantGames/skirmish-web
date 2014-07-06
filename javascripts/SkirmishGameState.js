@@ -2,7 +2,9 @@
 
 "use strict";
 var SkirmishGameState = (function () {
-    function processCities(gameState) {
+    var publik = {};
+
+    publik.processCities = function (gameState) {
         // TODO: refactor to abide by SOLID
         //  suggestion, break out method for creating city from iteration work
         var player,
@@ -35,8 +37,11 @@ var SkirmishGameState = (function () {
         }
 
         return cities;
-    }
-    return {
-        processCities: processCities,
     };
+
+    publik.getUnitIdsForCity = function () {
+        throw 'not implemented getUnitIdsForCity';
+    };
+
+    return publik;
 }());

@@ -15,7 +15,7 @@ var SkirmishApp = (function () {
 
         rawMove = SkirmishDOM.getTestMove();
 
-        unitIds = SkirmishApp.getUnitIdsForCity({
+        unitIds = SkirmishGameState.getUnitIdsForCity({
             unitCount: rawMove.unitCount,
             city: rawMove.originId,
         });
@@ -49,10 +49,6 @@ var SkirmishApp = (function () {
 
     publik.updateGameState = function () {
         SkirmishClient.pullGameState(publik.successfulPull);
-    };
-
-    publik.getUnitIdsForCity = function () {
-        throw 'not implemented getUnitIdsForCity';
     };
 
     return publik;
