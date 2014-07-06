@@ -2,10 +2,10 @@ var SkirmishMap = (function () {
 
     var map;
     function initialize() {
-        console.log("SkirmishMap initializing")
+        console.log("SkirmishMap initializing");
         var mapOptions;
         mapOptions = {
-          center: new google.maps.LatLng(-41.2889, 174.7772),
+          center: new google.maps.LatLng(39.8282, 98.5795),
           zoom: 10
         };
         map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
