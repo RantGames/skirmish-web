@@ -12,6 +12,10 @@ describe("SkirmishClient", function () {
         it("makes a GET request", function(){
             expect(this.requestArgs.type).toEqual('GET');
         });
+
+        it("sends to the game_state/show url", function(){
+            expect(this.requestArgs.url).toEqual('/game_state/show');
+        });
     });
 
     describe('logging in', function () {

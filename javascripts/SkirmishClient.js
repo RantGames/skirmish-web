@@ -6,7 +6,8 @@ var SkirmishClient = (function () {
         publicAttributes;
 
     endpoints = {
-        login: '/users/sign_in'
+        login: '/users/sign_in',
+        show_game_state: '/game_state/show'
     };
 
     function login(email, password, successCallback, failureCallback) {
@@ -32,6 +33,7 @@ var SkirmishClient = (function () {
     function pullGameState() {
         $.ajax({
             type: 'GET',
+            url: endpoints.show_game_state,
         });
 
     }
