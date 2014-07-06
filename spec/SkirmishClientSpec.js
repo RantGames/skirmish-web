@@ -1,6 +1,19 @@
 /*global describe, it, $, jasmine, spyOn, expect, SkirmishClient, beforeEach, afterEach */
 "use strict";
 describe("SkirmishClient", function () {
+    describe("pulling gamestate", function(){
+        beforeEach(function () {
+            spyOn($, 'ajax');
+            SkirmishClient.pullGameState();
+
+            this.requestArgs = $.ajax.calls.argsFor(0)[0];
+        });
+
+        it("makes a GET request", function(){
+            expect(this.requestArgs.type).toEqual('GET');
+        });
+    });
+
     describe('logging in', function () {
         describe('request arguments', function () {
             beforeEach(function () {

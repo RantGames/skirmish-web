@@ -29,8 +29,16 @@ var SkirmishClient = (function () {
         });
     }
 
+    function pullGameState() {
+        $.ajax({
+            type: 'GET',
+        });
+
+    }
+
     publicAttributes = {
-        login: login
+        login: login,
+        pullGameState: pullGameState,
     };
 
     return publicAttributes;
