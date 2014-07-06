@@ -7,7 +7,8 @@ var SkirmishClient = (function () {
 
     endpoints = {
         login: '/users/sign_in',
-        show_game_state: '/game_state/show'
+        showGameState: '/game_state/show',
+        sendMove: '/move/create',
     };
 
     function login(email, password, successCallback, errorCallback) {
@@ -33,7 +34,7 @@ var SkirmishClient = (function () {
     function pullGameState(successCallback, errorCallback) {
         $.ajax({
             type: 'GET',
-            url: endpoints.show_game_state,
+            url: endpoints.showGameState,
             dataType: 'json',
             success: successCallback,
             error: errorCallback,
@@ -41,8 +42,22 @@ var SkirmishClient = (function () {
     }
 
     function sendMove(move) {
-        console.log(move);
-        throw 'SkirmishClient#sendMove not implemented';
+        var serverFormattedMove = {
+            move: {
+                action: move.action,
+                origin_ids: move.originIds,
+                target_id: move.targetId,
+            },
+            game_id: move.gameId,
+        };
+
+        $.ajax({
+            url: endpoints.sendMove,
+            data: JSON.stringify(serverFormattedMove),
+            type: 'POST',
+            contentType: 'application/json',
+            dataType:  'json',
+        });
     }
 
     publicAttributes = {

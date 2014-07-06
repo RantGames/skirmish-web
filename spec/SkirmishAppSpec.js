@@ -93,6 +93,7 @@ describe("SkirmishApp", function () {
 
             spyOn(SkirmishGameState, 'getUnitIdsForCity').and.returnValue(this.fakeUnitIds);
             spyOn(SkirmishClient, 'sendMove');
+            spyOn(SkirmishGameState, 'gameId').and.returnValue(7);
 
             SkirmishApp.sendMove('move_unit');
         });
@@ -110,6 +111,7 @@ describe("SkirmishApp", function () {
                 originIds: this.fakeUnitIds,
                 targetId: 2,
                 action: 'move_unit',
+                gameId: 7
             });
         });
     });

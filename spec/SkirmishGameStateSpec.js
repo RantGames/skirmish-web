@@ -39,6 +39,10 @@ describe("SkirmishGameState", function () {
             this.city = SkirmishGameState.game.cities[0];
         });
 
+        it('sets the game id', function () {
+            expect(SkirmishGameState.game.id).toEqual(1);
+        });
+
         describe('processing cities', function () {
             it('sets the city name', function () {
                 expect(this.city.name).toBe('123 Fake St');
@@ -81,6 +85,13 @@ describe("SkirmishGameState", function () {
 
         it('returns the cities in the processed gamestate', function () {
             expect(SkirmishGameState.cities()).toContain(this.mockCity);
+        });
+    });
+
+    describe('gameId()', function () {
+        it('returns the game id', function () {
+            SkirmishGameState.game = { id: 7 };
+            expect(SkirmishGameState.gameId()).toBe(7);
         });
     });
 

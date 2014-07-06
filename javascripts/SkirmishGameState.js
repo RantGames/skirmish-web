@@ -51,7 +51,10 @@ var SkirmishGameState = (function () {
             }
         }
 
-        publik.game.cities = cities;
+        publik.game = {
+            id: game.id,
+            cities: cities,
+        };
     };
 
     publik.getUnitIdsForCity = function (args) {
@@ -69,6 +72,10 @@ var SkirmishGameState = (function () {
 
     publik.cities = function () {
         return publik.game.cities;
+    };
+
+    publik.gameId = function () {
+        return publik.game.id;
     };
 
     return publik;
