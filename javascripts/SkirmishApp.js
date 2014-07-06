@@ -39,6 +39,14 @@ var SkirmishApp = (function () {
 
     function sendMove() {
         var rawMove = SkirmishDOM.getTestMove();
+        SkirmishApp.getUnitIdsForCity({
+            unitCount: rawMove.unitCount,
+            city: rawMove.originId,
+        });
+    }
+
+    function getUnitIdsForCity() {
+        throw 'not implemented';
     }
 
     publicAttributes = {
@@ -48,6 +56,7 @@ var SkirmishApp = (function () {
         successfulPull: successfulPull,
         moveUnits: moveUnits,
         sendMove: sendMove,
+        getUnitIdsForCity: getUnitIdsForCity
     };
 
     return publicAttributes;
