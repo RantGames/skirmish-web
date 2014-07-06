@@ -16,6 +16,10 @@ describe("SkirmishClient", function () {
         it("sends to the game_state/show url", function(){
             expect(this.requestArgs.url).toEqual('/game_state/show');
         });
+
+        it("recieves JSON content", function(){
+            expect(this.requestArgs.dataType).toBe('json');
+        });
     });
 
     describe('logging in', function () {

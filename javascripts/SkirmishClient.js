@@ -34,6 +34,7 @@ var SkirmishClient = (function () {
         $.ajax({
             type: 'GET',
             url: endpoints.show_game_state,
+            dataType: 'json',
         });
 
     }
