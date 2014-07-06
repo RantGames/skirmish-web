@@ -1,4 +1,4 @@
-/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishMoves, SkirmishGameProcessor, jasmine */
+/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishMoves, SkirmishGameState, jasmine */
 "use strict";
 
 describe("SkirmishMoves", function () {

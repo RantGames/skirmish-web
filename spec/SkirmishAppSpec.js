@@ -1,4 +1,4 @@
-/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishMap, SkirmishDOM, SkirmishClient, SkirmishGameProcessor, jasmine */
+/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishMap, SkirmishDOM, SkirmishClient, SkirmishGameState, jasmine */
 "use strict";
 describe("SkirmishApp", function () {
     describe('login()', function () {
@@ -56,7 +56,7 @@ describe("SkirmishApp", function () {
             spyOn(SkirmishClient, 'pullGameState').and.callFake(function (successfulCallback) {
                 successfulCallback(that.rawGame);
             });
-            spyOn(SkirmishGameProcessor, 'processCities').and.returnValue(this.processedCities);
+            spyOn(SkirmishGameState, 'processCities').and.returnValue(this.processedCities);
             spyOn(SkirmishMap, 'displayCities');
             SkirmishApp.updateGameState();
         });
@@ -66,8 +66,8 @@ describe("SkirmishApp", function () {
         });
 
         describe('Successful Pull', function () {
-            it('asks SkirmishGameProcessor to process the cities from the raw data', function () {
-                expect(SkirmishGameProcessor.processCities).toHaveBeenCalledWith(this.rawGame);
+            it('asks SkirmishGameState to process the cities from the raw data', function () {
+                expect(SkirmishGameState.processCities).toHaveBeenCalledWith(this.rawGame);
             });
 
             it('asks SkirmishMap to render the cities', function () {

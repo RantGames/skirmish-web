@@ -1,7 +1,7 @@
-/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, City, SkirmishGameProcessor, jasmine */
+/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, City, SkirmishGameState, jasmine */
 "use strict";
 
-describe("SkirmishGameProcessor", function () {
+describe("SkirmishGameState", function () {
     beforeEach(function () {
         this.gameState = {
             game: {
@@ -35,7 +35,7 @@ describe("SkirmishGameProcessor", function () {
 
     describe('processCities', function () {
         beforeEach(function () {
-            var cities = SkirmishGameProcessor.processCities(this.gameState);
+            var cities = SkirmishGameState.processCities(this.gameState);
             this.city = cities[0];
         });
 

@@ -1,7 +1,7 @@
 /*global $, jQuery, alert, City*/
 
 "use strict";
-var SkirmishGameProcessor = (function () {
+var SkirmishGameState = (function () {
     function processCities(gameState) {
         // TODO: refactor to abide by SOLID
         //  suggestion, break out method for creating city from iteration work

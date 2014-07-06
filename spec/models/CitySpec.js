@@ -1,4 +1,4 @@
-/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, City, SkirmishGameProcessor, jasmine */
+/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, City, SkirmishGameState, jasmine */
 "use strict";
 
 describe("City model", function () {

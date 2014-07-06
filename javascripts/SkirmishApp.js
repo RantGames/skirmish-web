@@ -1,4 +1,4 @@
-/*global $, jQuery, alert, SkirmishDOM, SkirmishClient, SkirmishMap, SkirmishGameProcessor */
+/*global $, jQuery, alert, SkirmishDOM, SkirmishClient, SkirmishMap, SkirmishGameState */
 "use strict";
 
 var SkirmishApp = (function () {
@@ -42,7 +42,7 @@ var SkirmishApp = (function () {
     publik.successfulPull = function (gameState) {
         var cities;
 
-        cities = SkirmishGameProcessor.processCities(gameState);
+        cities = SkirmishGameState.processCities(gameState);
 
         SkirmishMap.displayCities(cities);
     };
@@ -76,7 +76,7 @@ var SkirmishApp = (function () {
 //
 // updateGameState()
 //  pulls game state from SkirmishClient
-//  asks SkirmishGameProcessor to process the game into workable game data
+//  asks SkirmishGameState to process the game into workable game data
 //  displays all the cities
 // 
 // 
