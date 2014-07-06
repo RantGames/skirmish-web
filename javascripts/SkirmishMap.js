@@ -5,8 +5,8 @@ var SkirmishMap = (function () {
         console.log("SkirmishMap initializing");
         var mapOptions;
         mapOptions = {
-          center: new google.maps.LatLng(39.8282, 98.5795),
-          zoom: 10
+          center: new google.maps.LatLng(39.8282, -98.5795),
+          zoom: 5
         };
         map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
     };
