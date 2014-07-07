@@ -17,7 +17,12 @@ var SkirmishMap = (function () {
     }
 
     function displayCity(city) {
-        return new SkirmishMap.CityOverlay(city);
+        var cityOverlay = new SkirmishMap.CityOverlay(city)
+        overlays.push(cityOverlay);
+        console.log('set up event for city '+cityOverlay.overlay[0]);
+        google.maps.event.addDomListener(cityOverlay.overlay[0], 'click', function() {
+            console.log('clicked on'+cityOverlay.city);
+        });
     }
 
     function displayCities(cities) {
@@ -33,6 +38,7 @@ var SkirmishMap = (function () {
     function CityOverlay(city) {
         this.city = city;
         this.setMap(map);
+
     }
 
     CityOverlay.prototype = new google.maps.OverlayView; //subclassing google's overlayView
