@@ -1,41 +1,60 @@
-/*global $, jQuery, alert, SkirmishDOM, SkirmishClient, SkirmishMap, SkirmishGameProcessor */
+/*global $, jQuery, alert, SkirmishDOM, SkirmishClient, SkirmishMap, SkirmishGameState */
 "use strict";
 
 var SkirmishApp = (function () {
-    var publicAttributes;
+    var publik = {};
 
-    function login() {
+    publik.login = function () {
         var credentials = SkirmishDOM.getLoginCredentials();
         SkirmishClient.login(credentials.email, credentials.password, SkirmishDOM.hideLoginForm);
-    }
-
-    function start() {
-        SkirmishDOM.$loginForm.on('submit', function (e) {
-            e.preventDefault();
-            login();
-        });
-    }
-
-    function successfulPull(gameState) {
-        var cities;
-
-        cities = SkirmishGameProcessor.processCities(gameState);
-
-        SkirmishMap.displayCities(cities);
-    }
-
-    function updateGameState() {
-        SkirmishClient.pullGameState(successfulPull);
-    }
-
-    publicAttributes = {
-        start: start,
-        login: login,
-        updateGameState: updateGameState,
-        successfulPull: successfulPull
     };
 
-    return publicAttributes;
+    publik.sendMove = function () {
+        var rawMove,
+            unitIds;
+
+        rawMove = SkirmishDOM.getTestMove();
+
+        unitIds = SkirmishGameState.getUnitIdsForCity({
+            unitCount: rawMove.unitCount,
+            city: rawMove.originId,
+        });
+
+        SkirmishClient.sendMove({
+            originIds: unitIds,
+            targetId: rawMove.targetId,
+            action: 'move_unit',
+            gameId: SkirmishGameState.gameId(),
+        });
+    };
+
+    publik.start = function () {
+        SkirmishDOM.$loginForm.on('submit', function (e) {
+            e.preventDefault();
+            publik.login();
+        });
+
+        SkirmishDOM.$testMoveForm.on('submit', function (e) {
+            e.preventDefault();
+            publik.sendMove();
+        });
+    };
+
+    publik.successfulPull = function (gameState) {
+        var cities;
+
+        SkirmishGameState.process(gameState);
+
+        cities = SkirmishGameState.cities();
+
+        SkirmishMap.displayCities(cities);
+    };
+
+    publik.updateGameState = function () {
+        SkirmishClient.pullGameState(publik.successfulPull);
+    };
+
+    return publik;
 }());
 
 
@@ -56,7 +75,7 @@ var SkirmishApp = (function () {
 //
 // updateGameState()
 //  pulls game state from SkirmishClient
-//  asks SkirmishGameProcessor to process the game into workable game data
+//  asks SkirmishGameState to process the game into workable game data
 //  displays all the cities
 // 
 // 
