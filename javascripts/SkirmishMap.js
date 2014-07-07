@@ -40,6 +40,12 @@ var SkirmishMap = (function () {
         }
     }
 
+    function clearOverlays() {
+        overlays.forEach(function (overlay) {
+            overlay.onRemove();
+        });
+    }
+
     function CityOverlay(city) {
         this.city = city;
         this.setMap(map);
@@ -107,6 +113,7 @@ var SkirmishMap = (function () {
         displayCities: displayCities,
         initialize: initialize,
         CityOverlay: CityOverlay,
+        clearOverlays: clearOverlays,
     };
 
 }());
