@@ -4,11 +4,16 @@ body { height: 100%; margin: 0; padding: 0 }
 
 .city-overlay
 {
-    border: 1px solid black;
+    border: 2px solid #EAEAEA;
+    border-radius: 5px;
     padding: 5px;
+    text-align: center;
+    min-width: 100px;
 }
 
-.city-overlay b
+.center
 {
-    text-align: middle;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
