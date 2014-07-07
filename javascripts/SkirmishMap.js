@@ -15,10 +15,10 @@ var SkirmishMap = (function () {
             center: new google.maps.LatLng(39.8282, -98.5795),
             zoom: 5
         };
+
         map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
         google.maps.event.addListener(map, 'zoom_changed', function () {
-            console.log('zoom changed', map.getZoom());
             var zoom = map.getZoom();
             overlays.forEach(function (overlay) {
                 overlay.scaleTemplate(zoom);
@@ -72,8 +72,12 @@ var SkirmishMap = (function () {
         }
     };
 
+    CityOverlay.prototype.renderHTML = function (html) {
+        this.overlay.html(html);
+    };
+
     CityOverlay.prototype.renderFullTemplate = function () {
-        this.overlay.html(cityOverlayTemplate({
+        this.renderHTML(cityOverlayTemplate({
             city: this.city,
             playerName: SkirmishGameState.players()[this.city.playerId],
             gravatar: gravatarURL(this.city.playerId),
@@ -81,7 +85,7 @@ var SkirmishMap = (function () {
     };
 
     CityOverlay.prototype.renderMiniTemplate = function () {
-        this.overlay.html(miniCityOverlayTemplate({
+        this.renderHTML(miniCityOverlayTemplate({
             gravatar: gravatarURL(this.city.playerId)
         }));
     };
