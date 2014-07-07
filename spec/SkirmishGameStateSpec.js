@@ -27,6 +27,11 @@ describe("SkirmishGameState", function () {
                                 ]
                             }
                         ]
+                    },
+                    {
+                        id: 3,
+                        name: "OtherTest",
+                        cities: []
                     }
                 ]
             }
@@ -71,6 +76,13 @@ describe("SkirmishGameState", function () {
                         }
                     ]
                 );
+            });
+        });
+
+        it('processes users', function () {
+            expect(SkirmishGameState.game.players).toEqual({
+                2: "Test",
+                3: "OtherTest"
             });
         });
     });
@@ -122,6 +134,15 @@ describe("SkirmishGameState", function () {
             });
 
             expect(unitIds).toEqual([1, 2, 6]);
+        });
+    });
+
+    describe('players()', function () {
+        it('returns a hash of players', function () {
+            var fakePlayers = jasmine.createSpy('players');
+            SkirmishGameState.game.players = fakePlayers;
+
+            expect(SkirmishGameState.players()).toEqual(fakePlayers);
         });
     });
 });

@@ -1,4 +1,4 @@
-/*global $, jQuery, alert, document, SkirmishClient, SkirmishMap, google */
+/*global $, jQuery, alert, document, SkirmishClient, SkirmishMap, SkirmishGameState, google */
 "use strict";
 
 var SkirmishMap = (function () {
@@ -21,7 +21,7 @@ var SkirmishMap = (function () {
         return new google.maps.Marker({
             position: new google.maps.LatLng(city.latLng[0], city.latLng[1]),
             map: map,
-            title: '[' + city.id + '] ' + city.name + ', owned by Player: ' + city.playerId + ', Units: ' + city.units.length,
+            title: '[' + city.id + '] ' + city.name + ', owned by ' + SkirmishGameState.players()[city.playerId] + ', Units: ' + city.units.length,
             icon: iconBase + city.playerId + '?s=40&d=retro',
             playerId: city.playerId
         });
