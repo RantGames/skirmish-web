@@ -77,5 +77,5 @@ var SkirmishApp = (function () {
 //  pulls game state from SkirmishClient
 //  asks SkirmishGameState to process the game into workable game data
 //  displays all the cities
-// 
-// 
+//
+//
