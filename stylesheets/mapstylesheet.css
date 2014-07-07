@@ -1,3 +1,14 @@
 html { height: 100% }
 body { height: 100%; margin: 0; padding: 0 }
 #map-canvas { height: 100% }
+
+.city-overlay
+{
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.city-overlay b
+{
+    text-align: middle;
+}
