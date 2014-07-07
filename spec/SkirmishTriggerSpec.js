@@ -9,9 +9,9 @@ describe("SkirmishTrigger", function () {
 
             var pusher = new Pusher('013b1cfdc9072c8dbe04');
             var channel = pusher.subscribe('skirmish_channel');
-            spyOn(channel, 'bind')
-            SkirmishTrigger.registerUpdateMapEvent(pusher, channel);
-            expect(channel.bind).toHaveBeenCalled()
+            spyOn(channel, 'bind');
+            SkirmishTrigger.registerUpdateMapEvent(channel);
+            expect(channel.bind).toHaveBeenCalled();
         });
 
     });
