@@ -2,11 +2,11 @@ describe("SkirmishMap", function(){
 
 	describe("display a city", function(){
 
-		it("plots a new marker on the map", function(){
-			spyOn(google.maps, 'Marker');
+		it("plots a new city overlay on the map", function(){
+			spyOn(SkirmishMap, 'CityOverlay');
 			this.city = new City("cityname", [123,55], 1);
 			SkirmishMap.displayCity(this.city);
-			expect(google.maps.Marker).toHaveBeenCalled();
+			expect(SkirmishMap.CityOverlay).toHaveBeenCalled();
 		});
 	});
 
