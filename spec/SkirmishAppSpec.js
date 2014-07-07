@@ -62,8 +62,8 @@ describe("SkirmishApp", function () {
             SkirmishApp.updateGameState();
         });
 
-        it('gets data from SkirmishClient#pullGameState', function () {
-            expect(SkirmishClient.pullGameState).toHaveBeenCalledWith(SkirmishApp.successfulPull);
+        it('tries to pull data from SkirmishClient#pullGameState', function () {
+            expect(SkirmishClient.pullGameState).toHaveBeenCalledWith(SkirmishApp.processUpdate, SkirmishApp.joinNewGame);
         });
 
         describe('Successful Pull', function () {
