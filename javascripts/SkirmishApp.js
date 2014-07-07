@@ -23,7 +23,7 @@ var SkirmishApp = (function () {
         SkirmishClient.sendMove({
             originIds: unitIds,
             targetId: rawMove.targetId,
-            action: 'move_unit',
+            action: rawMove.moveType + '_unit',
             gameId: SkirmishGameState.gameId(),
         });
     };

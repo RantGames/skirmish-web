@@ -31,6 +31,7 @@ var SkirmishDOM = (function () {
             unitCount: parseInt(getTestMoveFormValue('unitCount'), 10),
             originId: parseInt(getTestMoveFormValue('originId'), 10),
             targetId: parseInt(getTestMoveFormValue('targetId'), 10),
+            moveType: $testMoveForm.find('select').val(),
         };
     }
 

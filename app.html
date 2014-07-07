@@ -5,7 +5,10 @@
 </head>
 
 <form id="test-move-form">
-    Move <input name="unitCount" size="1"> unit(s) from city ID: <input name="originId" size="1"> to city ID: <input name="targetId" size="1"> <input type="submit" value="Send">
+    <select name="moveType">
+      <option value="move">Move</option>
+      <option value="attack">Attack</option>
+    </select> with <input name="unitCount" size="1"> unit(s) from city ID: <input name="originId" size="1"> to city ID: <input name="targetId" size="1"> <input type="submit" value="Send">
 </form>
 
 <body>

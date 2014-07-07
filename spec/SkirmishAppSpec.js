@@ -87,6 +87,7 @@ describe("SkirmishApp", function () {
                 unitCount: 5,
                 originId: 1,
                 targetId: 2,
+                moveType: 'move',
             };
             spyOn(SkirmishDOM, 'getTestMove').and.returnValue(testMove);
             this.fakeUnitIds = [4, 5, 6];
@@ -95,7 +96,7 @@ describe("SkirmishApp", function () {
             spyOn(SkirmishClient, 'sendMove');
             spyOn(SkirmishGameState, 'gameId').and.returnValue(7);
 
-            SkirmishApp.sendMove('move_unit');
+            SkirmishApp.sendMove();
         });
 
         it("gets the move data from SkirmishDOM", function () {
