@@ -2,7 +2,7 @@
 "use strict";
 
 var SkirmishDOM = (function () {
-    var    $testMoveForm = $('#test-move-form');
+    var $testMoveForm = $('#test-move-form');
 
     function getTestMoveFormValue(name) {
         return SkirmishDOM.$testMoveForm.find('input[name="' + name + '"]').val();
