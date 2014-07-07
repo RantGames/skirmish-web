@@ -40,7 +40,7 @@ var SkirmishApp = (function () {
         });
     };
 
-    publik.successfulPull = function (gameState) {
+    publik.processUpdate = function (gameState) {
         var cities;
 
         SkirmishGameState.process(gameState);
@@ -50,8 +50,14 @@ var SkirmishApp = (function () {
         SkirmishMap.displayCities(cities);
     };
 
+    publik.joinNewGame = function () {
+        SkirmishClient.joinNewGame(publik.processUpdate, function () {
+            alert('Failed to join or create game.');
+        });
+    };
+
     publik.updateGameState = function () {
-        SkirmishClient.pullGameState(publik.successfulPull);
+        SkirmishClient.pullGameState(publik.processUpdate, publik.joinNewGame);
     };
 
     return publik;

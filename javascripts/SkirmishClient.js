@@ -8,6 +8,7 @@ var SkirmishClient = (function () {
     endpoints = {
         login: '/users/sign_in',
         showGameState: '/game_state/show',
+        newGame: '/game_state/new',
         sendMove: '/move/create',
     };
 
@@ -41,6 +42,16 @@ var SkirmishClient = (function () {
         });
     }
 
+    function joinNewGame(successCallback, errorCallback) {
+        $.ajax({
+            type: 'GET',
+            url: endpoints.newGame,
+            dataType: 'json',
+            success: successCallback,
+            error: errorCallback,
+        });
+    }
+
     function sendMove(move) {
         var serverFormattedMove = {
             move: {
@@ -64,6 +75,7 @@ var SkirmishClient = (function () {
         login: login,
         pullGameState: pullGameState,
         sendMove: sendMove,
+        joinNewGame: joinNewGame,
     };
 
     return publicAttributes;
