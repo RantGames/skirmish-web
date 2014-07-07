@@ -43,7 +43,7 @@ var SkirmishGameState = (function () {
                 city_model = new City(city.name, [city.latitude, city.longitude], player.id, city.id);
 
                 for (k = 0; k < city.units.length; k += 1) {
-                    unit = city.units[i];
+                    unit = city.units[k];
                     city_model.addUnit(unit);
                 }
 
