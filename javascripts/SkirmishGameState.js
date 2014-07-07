@@ -55,6 +55,14 @@ var SkirmishGameState = (function () {
             id: game.id,
             cities: cities,
         };
+
+        publik.game.players = {};
+
+        for (i = 0; i < game.players.length; i += 1) {
+            player = game.players[i];
+
+            publik.game.players[player.id] = player.name;
+        }
     };
 
     publik.getUnitIdsForCity = function (args) {
@@ -76,6 +84,10 @@ var SkirmishGameState = (function () {
 
     publik.gameId = function () {
         return publik.game.id;
+    };
+
+    publik.players = function () {
+        return publik.game.players;
     };
 
     return publik;
