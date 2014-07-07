@@ -1,10 +1,11 @@
-/*global $, jQuery, alert, document, SkirmishClient, SkirmishMap, SkirmishGameState, google */
+/*global $, jQuery, alert, document, SkirmishClient, SkirmishMap, SkirmishGameState, google, Handlebars */
 "use strict";
 
 var SkirmishMap = (function () {
+    var map, cityOverlayTemplate;
 
-    var map;
     function initialize() {
+        cityOverlayTemplate = Handlebars.compile($("#city-overlay-template").html());
         console.log("SkirmishMap initializing");
         var mapOptions;
 
@@ -16,15 +17,7 @@ var SkirmishMap = (function () {
     }
 
     function displayCity(city) {
-        var iconBase = 'http://www.gravatar.com/avatar/';
-
-        return new google.maps.Marker({
-            position: new google.maps.LatLng(city.latLng[0], city.latLng[1]),
-            map: map,
-            title: '[' + city.id + '] ' + city.name + ', owned by ' + SkirmishGameState.players()[city.playerId] + ', Units: ' + city.units.length,
-            icon: iconBase + city.playerId + '?s=40&d=retro',
-            playerId: city.playerId
-        });
+        return new SkirmishMap.CityOverlay(city);
     }
 
     function displayCities(cities) {
@@ -45,9 +38,10 @@ var SkirmishMap = (function () {
     CityOverlay.prototype = new google.maps.OverlayView; //subclassing google's overlayView
 
     CityOverlay.prototype.onAdd = function () {
-        this.overlay = $('<div class="city-overlay">' + this.city.name + '</div>');
+        this.city.playerName = SkirmishGameState.players()[this.city.playerId];
+        this.overlay = $(cityOverlayTemplate(this.city));
         this.overlay.className = 'city-overlay';
-        this.getPanes().overlayImage.appendChild(this.overlay); //attach it to overlay panes so it behaves like markers
+        this.getPanes().overlayImage.appendChild(this.overlay[0]); //attach it to overlay panes so it behaves like markers
     };
 
     CityOverlay.prototype.onRemove = function () {
@@ -55,10 +49,18 @@ var SkirmishMap = (function () {
     };
 
     CityOverlay.prototype.draw = function () {
-        var position = this.getProjection().fromLatLngToDivPixel(this.get('position')); // translate map latLng coords into DOM px coords for css positioning
+        var overlayProjection,
+            position;
+
+        overlayProjection = this.getProjection();
+
+        position = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(this.city.latLng[0], this.city.latLng[1]));
+
         this.overlay.css({
-            'top'   : position.y + 'px',
-            'left'  : position.x + 'px'
+            top: (position.y - this.overlay.height() / 2) + 'px',
+            left: (position.x - this.overlay.width() / 2) + 'px',
+            position: 'absolute',
+            background: 'white'
         });
     };
 
