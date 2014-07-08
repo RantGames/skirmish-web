@@ -29,11 +29,6 @@ var SkirmishApp = (function () {
     };
 
     publik.start = function () {
-        SkirmishDOM.$loginForm.on('submit', function (e) {
-            e.preventDefault();
-            publik.login();
-        });
-
         SkirmishDOM.$testMoveForm.on('submit', function (e) {
             e.preventDefault();
             publik.sendMove();
