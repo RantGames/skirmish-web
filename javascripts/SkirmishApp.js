@@ -4,6 +4,7 @@
 var SkirmishApp = (function () {
     var publik = {};
 
+
     publik.login = function () {
         var credentials = SkirmishDOM.getLoginCredentials();
         SkirmishClient.login(credentials.email, credentials.password, SkirmishDOM.hideLoginForm);
@@ -26,11 +27,6 @@ var SkirmishApp = (function () {
     };
 
     publik.start = function () {
-        SkirmishDOM.$loginForm.on('submit', function (e) {
-            e.preventDefault();
-            publik.login();
-        });
-
         SkirmishDOM.$testMoveForm.on('submit', function (e) {
             e.preventDefault();
             publik.sendMove();
@@ -48,6 +44,8 @@ var SkirmishApp = (function () {
 
         SkirmishMap.displayCities(cities);
 
+        SkirmishApp.checkVictory();
+
     };
 
     publik.updatePlayerId = function (data) {
@@ -62,6 +60,15 @@ var SkirmishApp = (function () {
 
     publik.updateGameState = function () {
         SkirmishClient.pullGameState(publik.processUpdate, publik.joinNewGame);
+    };
+
+    publik.checkVictory = function () {
+        var winner = SkirmishGameState.getWinner();
+
+        if (winner) {
+            alert('Winner: ' + winner + '!');
+        }
+
     };
 
     return publik;

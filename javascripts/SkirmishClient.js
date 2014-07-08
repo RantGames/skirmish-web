@@ -6,32 +6,11 @@ var SkirmishClient = (function () {
         publicAttributes;
 
     endpoints = {
-        login: '/users/sign_in',
         showGameState: '/game_state/show',
         newGame: '/game_state/new',
         sendMove: '/move/create',
         currentPlayerId: '/current_player_id'
     };
-
-    function login(email, password, successCallback, errorCallback) {
-        var credentials = {
-            user: {
-                email: email,
-                password: password,
-                remember_me: '0'
-            }
-        };
-
-        $.ajax({
-            url: endpoints.login,
-            data: JSON.stringify(credentials),
-            type: 'POST',
-            contentType: 'application/json',
-            dataType:  'json',
-            success: successCallback,
-            error: errorCallback
-        });
-    }
 
     function pullGameState(successCallback, errorCallback) {
         $.ajax({
@@ -77,7 +56,6 @@ var SkirmishClient = (function () {
     }
 
     publicAttributes = {
-        login: login,
         pullGameState: pullGameState,
         sendMove: sendMove,
         joinNewGame: joinNewGame,

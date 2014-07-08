@@ -40,6 +40,7 @@ var SkirmishTroupMovement = (function () {
   var clickCountUpdater = function (city) {
     var myCity = (city.playerId == SkirmishGameState.getCurrentPlayerId())
     if (lastCityClicked != null) {
+
       if( myCity && city.id == lastCityClicked.id) {
         clickCount += 1;
       } else {
@@ -49,6 +50,7 @@ var SkirmishTroupMovement = (function () {
           clickCount = 0;
         }
       };
+
     }
     lastCityClicked = city
 

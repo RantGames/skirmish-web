@@ -1,83 +1,46 @@
-/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishMap, SkirmishDOM, SkirmishClient, SkirmishGameState, jasmine */
+/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishMap, SkirmishDOM, SkirmishClient, SkirmishGameState, jasmine, context, window */
 "use strict";
 describe("SkirmishApp", function () {
-    describe('login()', function () {
-        beforeEach(function () {
-            this.fakeCredentials = {
-                email: 'neo@matr.ix',
-                password: 'swordfish'
-            };
-
-            var that = this;
-
-            spyOn(SkirmishDOM, 'getLoginCredentials').and.callFake(function () {
-                return that.fakeCredentials;
-            });
-        });
-
-        describe('credential flow', function () {
-            beforeEach(function () {
-                spyOn(SkirmishClient, 'login');
-            });
-
-            it('gets credentials from SkirmishDOM', function () {
-                SkirmishApp.login();
-                expect(SkirmishDOM.getLoginCredentials).toHaveBeenCalled();
-            });
-
-            it('logs in to SkirmishClient', function () {
-                SkirmishApp.login();
-                expect(SkirmishClient.login).toHaveBeenCalledWith(this.fakeCredentials.email, this.fakeCredentials.password, jasmine.any(Function));
-            });
-        });
-
-
-        it('hides the login form if login was successful', function () {
-            spyOn(SkirmishDOM, 'hideLoginForm');
-
-            spyOn(SkirmishClient, 'login').and.callFake(function (e, p, successfulCallback) {
-                successfulCallback();
-            });
-
-            SkirmishApp.login();
-
-            expect(SkirmishDOM.hideLoginForm).toHaveBeenCalled();
-        });
-    });
-
-    describe('updateGameState()', function () {
+    describe('processUpdate()', function () {
         beforeEach(function () {
 
             this.rawGame = jasmine.createSpy('raw game data');
-            this.processedCities = jasmine.createSpy('processed cities');
-
-            var that = this;
-
-            spyOn(SkirmishClient, 'pullGameState').and.callFake(function (successfulCallback) {
-                successfulCallback(that.rawGame);
-            });
             spyOn(SkirmishGameState, 'process');
+
+            this.processedCities = jasmine.createSpy('processed cities');
             spyOn(SkirmishGameState, 'cities').and.returnValue(this.processedCities);
             spyOn(SkirmishMap, 'displayCities');
-            SkirmishApp.updateGameState();
+            spyOn(SkirmishApp, 'checkVictory');
+
+            SkirmishApp.processUpdate(this.rawGame);
         });
+
+        it('asks SkirmishGameState to process the new game state', function () {
+            expect(SkirmishGameState.process).toHaveBeenCalledWith(this.rawGame);
+        });
+
+        it('gets the cities from SkirmishGameState', function () {
+            expect(SkirmishGameState.cities).toHaveBeenCalled();
+        });
+
+        it('asks SkirmishMap to render the cities', function () {
+            expect(SkirmishMap.displayCities).toHaveBeenCalledWith(this.processedCities);
+        });
+
+        it('checks if someone has won', function () {
+            expect(SkirmishApp.checkVictory).toHaveBeenCalled();
+        });
+
+    });
+
+    describe('updateGameState()', function () {
 
         it('tries to pull data from SkirmishClient#pullGameState', function () {
+            spyOn(SkirmishClient, 'pullGameState');
+
+            SkirmishApp.updateGameState();
+
             expect(SkirmishClient.pullGameState).toHaveBeenCalledWith(SkirmishApp.processUpdate, SkirmishApp.joinNewGame);
-        });
-
-        describe('Successful Pull', function () {
-            it('asks SkirmishGameState to process the new game state', function () {
-                expect(SkirmishGameState.process).toHaveBeenCalledWith(this.rawGame);
-            });
-
-            it('gets the cities from SkirmishGameState', function () {
-                expect(SkirmishGameState.cities).toHaveBeenCalled();
-            });
-
-            it('asks SkirmishMap to render the cities', function () {
-                expect(SkirmishMap.displayCities).toHaveBeenCalledWith(this.processedCities);
-            });
         });
     });
 
@@ -123,4 +86,23 @@ describe("SkirmishApp", function () {
             expect(SkirmishGameState.setCurrentPlayerId).toHaveBeenCalledWith(fakeId);
         })
     })
+
+    describe('checkVictory()', function () {
+        it('checks SkirmishGameState to see if someone has won', function () {
+            spyOn(SkirmishGameState, 'getWinner');
+
+            SkirmishApp.checkVictory();
+
+            expect(SkirmishGameState.getWinner).toHaveBeenCalled();
+        });
+
+        it('throws an alert if someone has won', function () {
+            spyOn(SkirmishGameState, 'getWinner').and.returnValue('Nick');
+            spyOn(window, 'alert');
+
+            SkirmishApp.checkVictory();
+
+            expect(window.alert).toHaveBeenCalledWith('Winner: Nick!');
+        });
+    });
 });

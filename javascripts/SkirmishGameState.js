@@ -20,50 +20,65 @@ var SkirmishGameState = (function () {
         }
     }
 
-    publik.process = function (gameState) {
-        // TODO: refactor to abide by SOLID
-        //  suggestion, break out method for creating city from iteration work
-        var player,
-            city,
-            cities = [],
-            i,
-            j,
-            k,
-            unit,
-            city_model,
-            game;
+    function processPlayers(rawPlayersData) {
+        var players = {};
 
-        game = gameState.game;
+        rawPlayersData.forEach(function (player) {
+            players[player.id] = player.name;
+        });
 
-        for (i = 0; i < game.players.length; i += 1) {
-            player = game.players[i];
+        return players;
+    }
 
-            for (j = 0; j < player.cities.length; j += 1) {
-                city = player.cities[j];
+    // Cities need to know their player id, so this function
+    // takes in a list of players who each have a list of cities
+    // and returns a list of cities with the playerId set
 
-                city_model = new City(city.name, [city.latitude, city.longitude], player.id, city.id);
+    function assignPlayerIdsToCities(players) {
+        var cities = [];
 
-                for (k = 0; k < city.units.length; k += 1) {
-                    unit = city.units[k];
-                    city_model.addUnit(unit);
-                }
+        players.forEach(function (player) {
+            player.cities.forEach(function (city) {
+                city.playerId = player.id;
+                cities.push(city);
+            });
+        });
 
-                cities.push(city_model);
-            }
-        }
+        return cities;
+    }
+
+    function processCity(rawCity) {
+        var city = new City(rawCity.name, [rawCity.latitude, rawCity.longitude], rawCity.playerId, rawCity.id);
+
+        rawCity.units.forEach(function (unit) {
+            city.addUnit(unit);
+        });
+
+        return city;
+    }
+
+    function processCities(cities) {
+        return $.map(cities, processCity);
+    }
+
+    function processCitiesFromPlayers(players) {
+        var rawCities = assignPlayerIdsToCities(players);
+        return processCities(rawCities);
+    }
+
+    function getPlayerName(id) {
+        return publik.game.players[id];
+    }
+
+    publik.process = function (data) {
+        var gameState = data.game;
 
         publik.game = {
-            id: game.id,
-            cities: cities,
+            id: gameState.id,
+            winner: gameState.winner,
+            cities: processCitiesFromPlayers(gameState.players),
+            players: processPlayers(gameState.players)
         };
-
-        publik.game.players = {};
-
-        for (i = 0; i < game.players.length; i += 1) {
-            player = game.players[i];
-
-            publik.game.players[player.id] = player.name;
-        }
     };
 
     publik.setCurrentPlayerId = function(playerId) {
@@ -98,6 +113,10 @@ var SkirmishGameState = (function () {
 
     publik.players = function () {
         return publik.game.players;
+    };
+
+    publik.getWinner = function () {
+        return getPlayerName(publik.game.winner);
     };
 
     return publik;
