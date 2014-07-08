@@ -65,6 +65,7 @@ var SkirmishMap = (function () {
         setupDomHoverListener(cityOverlay);
     }
 
+
     function setupDomClickListener(cityOverlay) {
         console.log('set up event for city '+cityOverlay.overlay[0]);
         google.maps.event.addDomListener(cityOverlay.overlay[0], 'click', function() {
