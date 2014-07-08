@@ -101,7 +101,7 @@ var SkirmishGameState = (function () {
 
         city = getCity(targetCityId);
 
-        return city.units.slice(0, unitCount + 1).map(function (unit) { return unit.id; });
+        return city.units.slice(0, unitCount).map(function (unit) { return unit.id; });
     };
 
     publik.cities = function () {
