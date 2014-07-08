@@ -38,14 +38,14 @@ var SkirmishMap = (function () {
     function displayCircle(city) {
 
       var circleOptions = {
-          strokeColor: "#c4c4c4",
+          strokeColor: "#000FFF",
           strokeOpacity: 0.35,
-          strokeWeight: 0,
+          strokeWeight: 10,
           fillColor: "#0000FF",
-          fillOpacity: .35,
+          fillOpacity: .25,
           map: map,
           center: new google.maps.LatLng(city.latLng[0],city.latLng[1]),
-          radius: 200000
+          radius: 1000000
         };
 
         var cityCircle = new google.maps.Circle(circleOptions);
