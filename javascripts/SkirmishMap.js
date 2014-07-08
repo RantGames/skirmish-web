@@ -36,6 +36,7 @@ var SkirmishMap = (function () {
     }
 
     function displayCircle(city) {
+      var range = 1000
 
       var circleOptions = {
           strokeColor: "#000FFF",
@@ -45,7 +46,7 @@ var SkirmishMap = (function () {
           fillOpacity: .25,
           map: map,
           center: new google.maps.LatLng(city.latLng[0],city.latLng[1]),
-          radius: 1000000
+          radius: range * 1000
         };
 
         var cityCircle = new google.maps.Circle(circleOptions);

@@ -49,7 +49,8 @@ var SkirmishApp = (function () {
     };
 
     publik.updatePlayerId = function (data) {
-        SkirmishGameState.setCurrentPlayerId(data.user_id)
+        console.log(data)
+        SkirmishGameState.setCurrentPlayerId(data.player_id)
     }
 
     publik.joinNewGame = function () {

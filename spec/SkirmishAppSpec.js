@@ -80,7 +80,8 @@ describe("SkirmishApp", function () {
         it('tells SkirmishGameState to set the current player id', function() {
             spyOn(SkirmishGameState, 'setCurrentPlayerId');
             var fakeId = 2;
-            var fakeData = {user_id: fakeId};
+            var fakeData = {player_id: fakeId};
+            console.log(fakeData)
             SkirmishApp.updatePlayerId(fakeData);
 
             expect(SkirmishGameState.setCurrentPlayerId).toHaveBeenCalledWith(fakeId);
