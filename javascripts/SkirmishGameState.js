@@ -32,6 +32,7 @@ var SkirmishGameState = (function () {
     // Cities need to know their player id, so this function
     // takes in a list of players who each have a list of cities
     // and returns a list of cities with the playerId set
+
     function assignPlayerIdsToCities(players) {
         var cities = [];
 
@@ -59,19 +60,17 @@ var SkirmishGameState = (function () {
         return $.map(cities, processCity);
     }
 
+    function processCitiesFromPlayers(players) {
+        var rawCities = assignPlayerIdsToCities(players);
+        return processCities(rawCities);
+    }
+
     publik.process = function (data) {
-        var rawCities,
-            cities,
-            gameState;
-
-        gameState = data.game;
-
-        rawCities = assignPlayerIdsToCities(gameState.players);
-        cities = processCities(rawCities);
+        var gameState = data.game;
 
         publik.game = {
             id: gameState.id,
-            cities: cities,
+            cities: processCitiesFromPlayers(gameState.players),
             players: processPlayers(gameState.players)
         };
     };
