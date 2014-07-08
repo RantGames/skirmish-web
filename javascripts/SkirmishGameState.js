@@ -29,42 +29,50 @@ var SkirmishGameState = (function () {
         return players;
     }
 
-    publik.process = function (gameState) {
-        // TODO: refactor to abide by SOLID
-        //  suggestion, break out method for creating city from iteration work
-        var player,
-            city,
-            cities = [],
-            i,
-            j,
-            k,
-            unit,
-            city_model,
-            game;
+    // Cities need to know their player id, so this function
+    // takes in a list of players who each have a list of cities
+    // and returns a list of cities with the playerId set
+    function assignPlayerIdsToCities(players) {
+        var cities = [];
 
-        game = gameState.game;
+        players.forEach(function (player) {
+            player.cities.forEach(function (city) {
+                city.playerId = player.id;
+                cities.push(city);
+            });
+        });
 
-        for (i = 0; i < game.players.length; i += 1) {
-            player = game.players[i];
+        return cities;
+    }
 
-            for (j = 0; j < player.cities.length; j += 1) {
-                city = player.cities[j];
+    function processCity(rawCity) {
+        var city = new City(rawCity.name, [rawCity.latitude, rawCity.longitude], rawCity.playerId, rawCity.id);
 
-                city_model = new City(city.name, [city.latitude, city.longitude], player.id, city.id);
+        rawCity.units.forEach(function (unit) {
+            city.addUnit(unit);
+        });
 
-                for (k = 0; k < city.units.length; k += 1) {
-                    unit = city.units[k];
-                    city_model.addUnit(unit);
-                }
+        return city;
+    }
 
-                cities.push(city_model);
-            }
-        }
+    function processCities(cities) {
+        return $.map(cities, processCity);
+    }
+
+    publik.process = function (data) {
+        var rawCities,
+            cities,
+            gameState;
+
+        gameState = data.game;
+
+        rawCities = assignPlayerIdsToCities(gameState.players);
+        cities = processCities(rawCities);
 
         publik.game = {
-            id: game.id,
+            id: gameState.id,
             cities: cities,
-            players: processPlayers(game.players)
+            players: processPlayers(gameState.players)
         };
     };
 
