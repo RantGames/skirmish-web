@@ -19,6 +19,16 @@ var SkirmishGameState = (function () {
         }
     }
 
+    function processPlayers(rawPlayersData) {
+        var players = {};
+
+        rawPlayersData.forEach(function (player) {
+            players[player.id] = player.name;
+        });
+
+        return players;
+    }
+
     publik.process = function (gameState) {
         // TODO: refactor to abide by SOLID
         //  suggestion, break out method for creating city from iteration work
@@ -54,15 +64,8 @@ var SkirmishGameState = (function () {
         publik.game = {
             id: game.id,
             cities: cities,
+            players: processPlayers(game.players)
         };
-
-        publik.game.players = {};
-
-        for (i = 0; i < game.players.length; i += 1) {
-            player = game.players[i];
-
-            publik.game.players[player.id] = player.name;
-        }
     };
 
     publik.getUnitIdsForCity = function (args) {
