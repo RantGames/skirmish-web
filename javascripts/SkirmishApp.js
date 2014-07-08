@@ -4,11 +4,6 @@
 var SkirmishApp = (function () {
     var publik = {};
 
-    publik.login = function () {
-        var credentials = SkirmishDOM.getLoginCredentials();
-        SkirmishClient.login(credentials.email, credentials.password, SkirmishDOM.hideLoginForm);
-    };
-
     publik.sendMove = function () {
         var rawMove,
             unitIds;
