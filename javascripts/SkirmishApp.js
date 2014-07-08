@@ -4,13 +4,18 @@
 var SkirmishApp = (function () {
     var publik = {};
 
-    publik.sendMove = function () {
-        var rawMove,
-            unitIds;
+    function succesfulMove() {
+        SkirmishDOM.flash('Move submitted successfully. Waiting for other players.');
+    }
 
-        rawMove = SkirmishDOM.getTestMove();
+    function failedMove(data) {
+        SkirmishDOM.flash(data.responseJSON.message);
+    }
 
-        unitIds = SkirmishGameState.getUnitIdsForCity({
+    publik.sendMove = function (rawMove) {
+        SkirmishDOM.flash('Sending move');
+
+        var unitIds = SkirmishGameState.getUnitIdsForCity({
             unitCount: rawMove.unitCount,
             city: rawMove.originId,
         });
@@ -20,7 +25,7 @@ var SkirmishApp = (function () {
             targetId: rawMove.targetId,
             action: rawMove.moveType + '_unit',
             gameId: SkirmishGameState.gameId(),
-        });
+        }, succesfulMove, failedMove);
     };
 
     publik.start = function () {
@@ -31,6 +36,8 @@ var SkirmishApp = (function () {
     };
 
     publik.processUpdate = function (gameState) {
+        SkirmishDOM.flash('Processing');
+
         var cities;
 
         SkirmishGameState.process(gameState);
@@ -40,6 +47,7 @@ var SkirmishApp = (function () {
         SkirmishMap.displayCities(cities);
 
         SkirmishApp.checkVictory();
+        SkirmishDOM.flash('Ready. Make a move.');
     };
 
     publik.joinNewGame = function () {
@@ -49,6 +57,7 @@ var SkirmishApp = (function () {
     };
 
     publik.updateGameState = function () {
+        SkirmishDOM.flash('Updating');
         SkirmishClient.pullGameState(publik.processUpdate, publik.joinNewGame);
     };
 
@@ -56,6 +65,7 @@ var SkirmishApp = (function () {
         var winner = SkirmishGameState.getWinner();
 
         if (winner) {
+            SkirmishDOM.flash(winner + ' has won!');
             alert('Winner: ' + winner + '!');
         }
 

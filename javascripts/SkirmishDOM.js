@@ -3,6 +3,7 @@
 
 var SkirmishDOM = (function () {
     var $testMoveForm = $('#test-move-form');
+    var $messageBar = $('#message-bar');
 
     function getTestMoveFormValue(name) {
         return SkirmishDOM.$testMoveForm.find('input[name="' + name + '"]').val();
@@ -17,8 +18,13 @@ var SkirmishDOM = (function () {
         };
     }
 
+    function flash(message) {
+        $messageBar.text(message);
+    }
+
     return {
         $testMoveForm: $testMoveForm,
         getTestMove: getTestMove,
+        flash: flash,
     };
 }());

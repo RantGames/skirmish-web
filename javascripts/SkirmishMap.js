@@ -60,7 +60,6 @@ var SkirmishMap = (function () {
     }
 
     function gravatarURL(gravatarHash) {
-        console.log(gravatarHash)
         return 'http://www.gravatar.com/avatar/' + gravatarHash + '?s=40&d=retro';
     }
 
