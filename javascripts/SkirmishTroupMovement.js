@@ -90,9 +90,12 @@ var SkirmishTroupMovement = (function () {
     console.log('Player: '+SkirmishGameState.getCurrentPlayerId())
     if( myCity && city.id == lastCityClicked.id) {
       clickCount += 1;
+      if (clickCount > 5) {clickCount = 5};
+      SkirmishDOM.flash(clickCount*20 +'% of units selected in '+city.name)
     } else {
       if (myCity) {
         clickCount = 1;
+        SkirmishDOM.flash('20% of units selected in '+city.name)
       } else {
         clickCount = 0;
       }
