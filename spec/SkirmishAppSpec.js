@@ -1,39 +1,46 @@
-/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishMap, SkirmishDOM, SkirmishClient, SkirmishGameState, jasmine */
+/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishMap, SkirmishDOM, SkirmishClient, SkirmishGameState, jasmine, context */
 "use strict";
 describe("SkirmishApp", function () {
-    describe('updateGameState()', function () {
+    describe('processUpdate()', function () {
         beforeEach(function () {
 
             this.rawGame = jasmine.createSpy('raw game data');
-            this.processedCities = jasmine.createSpy('processed cities');
-
-            var that = this;
-
-            spyOn(SkirmishClient, 'pullGameState').and.callFake(function (successfulCallback) {
-                successfulCallback(that.rawGame);
-            });
             spyOn(SkirmishGameState, 'process');
+
+            this.processedCities = jasmine.createSpy('processed cities');
             spyOn(SkirmishGameState, 'cities').and.returnValue(this.processedCities);
             spyOn(SkirmishMap, 'displayCities');
-            SkirmishApp.updateGameState();
+            spyOn(SkirmishApp, 'checkVictory');
+
+            SkirmishApp.processUpdate(this.rawGame);
         });
+
+        it('asks SkirmishGameState to process the new game state', function () {
+            expect(SkirmishGameState.process).toHaveBeenCalledWith(this.rawGame);
+        });
+
+        it('gets the cities from SkirmishGameState', function () {
+            expect(SkirmishGameState.cities).toHaveBeenCalled();
+        });
+
+        it('asks SkirmishMap to render the cities', function () {
+            expect(SkirmishMap.displayCities).toHaveBeenCalledWith(this.processedCities);
+        });
+
+        it('checks if someone has won', function () {
+            expect(SkirmishApp.checkVictory).toHaveBeenCalled();
+        });
+
+    });
+
+    describe('updateGameState()', function () {
 
         it('tries to pull data from SkirmishClient#pullGameState', function () {
+            spyOn(SkirmishClient, 'pullGameState');
+
+            SkirmishApp.updateGameState();
+
             expect(SkirmishClient.pullGameState).toHaveBeenCalledWith(SkirmishApp.processUpdate, SkirmishApp.joinNewGame);
-        });
-
-        describe('Successful Pull', function () {
-            it('asks SkirmishGameState to process the new game state', function () {
-                expect(SkirmishGameState.process).toHaveBeenCalledWith(this.rawGame);
-            });
-
-            it('gets the cities from SkirmishGameState', function () {
-                expect(SkirmishGameState.cities).toHaveBeenCalled();
-            });
-
-            it('asks SkirmishMap to render the cities', function () {
-                expect(SkirmishMap.displayCities).toHaveBeenCalledWith(this.processedCities);
-            });
         });
     });
 

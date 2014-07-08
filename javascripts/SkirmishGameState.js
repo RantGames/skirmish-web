@@ -100,5 +100,9 @@ var SkirmishGameState = (function () {
         return publik.game.players;
     };
 
+    publik.getWinner = function () {
+        throw 'SkirmishGameState#getWinner - Not Implemented';
+    };
+
     return publik;
 }());

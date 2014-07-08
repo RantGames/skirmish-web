@@ -43,6 +43,8 @@ var SkirmishApp = (function () {
         cities = SkirmishGameState.cities();
 
         SkirmishMap.displayCities(cities);
+
+        SkirmishApp.checkVictory();
     };
 
     publik.joinNewGame = function () {
@@ -53,6 +55,10 @@ var SkirmishApp = (function () {
 
     publik.updateGameState = function () {
         SkirmishClient.pullGameState(publik.processUpdate, publik.joinNewGame);
+    };
+
+    publik.checkVictory = function () {
+        throw 'SkimishApp#checkVictory - not implemented';
     };
 
     return publik;
