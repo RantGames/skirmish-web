@@ -52,7 +52,6 @@ describe("SkirmishApp", function () {
                 targetId: 2,
                 moveType: 'move',
             };
-            spyOn(SkirmishDOM, 'getTestMove').and.returnValue(testMove);
             this.fakeUnitIds = [4, 5, 6];
 
             spyOn(SkirmishGameState, 'getUnitIdsForCity').and.returnValue(this.fakeUnitIds);
@@ -71,8 +70,8 @@ describe("SkirmishApp", function () {
                 originIds: this.fakeUnitIds,
                 targetId: 2,
                 action: 'move_unit',
-                gameId: 7
-            });
+                gameId: 7,
+            }, jasmine.any(Function), jasmine.any(Function));
         });
     });
 

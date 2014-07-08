@@ -34,12 +34,13 @@ var SkirmishGameState = (function () {
     // takes in a list of players who each have a list of cities
     // and returns a list of cities with the playerId set
 
-    function assignPlayerIdsToCities(players) {
+    function assignPlayerAttributesToCities(players) {
         var cities = [];
 
         players.forEach(function (player) {
             player.cities.forEach(function (city) {
                 city.playerId = player.id;
+                city.gravatarHash = player.gravatar_hash;
                 cities.push(city);
             });
         });
@@ -48,7 +49,7 @@ var SkirmishGameState = (function () {
     }
 
     function processCity(rawCity) {
-        var city = new City(rawCity.name, [rawCity.latitude, rawCity.longitude], rawCity.playerId, rawCity.id);
+        var city = new City(rawCity.name, [rawCity.latitude, rawCity.longitude], rawCity.playerId, rawCity.id, rawCity.gravatarHash);
 
         rawCity.units.forEach(function (unit) {
             city.addUnit(unit);
@@ -62,7 +63,7 @@ var SkirmishGameState = (function () {
     }
 
     function processCitiesFromPlayers(players) {
-        var rawCities = assignPlayerIdsToCities(players);
+        var rawCities = assignPlayerAttributesToCities(players);
         return processCities(rawCities);
     }
 

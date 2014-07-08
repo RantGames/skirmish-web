@@ -32,7 +32,7 @@ var SkirmishClient = (function () {
         });
     }
 
-    function sendMove(move) {
+    function sendMove(move, successCallback, errorCallback) {
         var serverFormattedMove = {
             move: {
                 action: move.action,
@@ -48,6 +48,8 @@ var SkirmishClient = (function () {
             type: 'POST',
             contentType: 'application/json',
             dataType:  'json',
+            success: successCallback,
+            error: errorCallback,
         });
     }
 

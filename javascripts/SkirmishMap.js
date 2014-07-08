@@ -100,8 +100,8 @@ var SkirmishMap = (function () {
         this.overlay = $('<div></div>');
     }
 
-    function gravatarURL(playerId) {
-        return 'http://www.gravatar.com/avatar/' + playerId + '?s=40&d=retro';
+    function gravatarURL(gravatarHash) {
+        return 'http://www.gravatar.com/avatar/' + gravatarHash + '?s=40&d=retro';
     }
 
     CityOverlay.prototype = new google.maps.OverlayView; //subclassing google's overlayView
@@ -125,17 +125,21 @@ var SkirmishMap = (function () {
         this.overlay.append($(html));
     };
 
+    CityOverlay.prototype.gravatarURL = function () {
+        return gravatarURL(this.city.gravatarHash);
+    };
+
     CityOverlay.prototype.renderFullTemplate = function () {
         this.renderHTML(cityOverlayTemplate({
             city: this.city,
             playerName: SkirmishGameState.players()[this.city.playerId],
-            gravatar: gravatarURL(this.city.playerId),
+            gravatar: this.gravatarURL()
         }));
     };
 
     CityOverlay.prototype.renderMiniTemplate = function () {
         this.renderHTML(miniCityOverlayTemplate({
-            gravatar: gravatarURL(this.city.playerId)
+            gravatar: this.gravatarURL()
         }));
     };
 

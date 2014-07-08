@@ -4,16 +4,18 @@
 var SkirmishApp = (function () {
     var publik = {};
 
+    function succesfulMove() {
+        SkirmishDOM.flash('Move submitted successfully. Waiting for other players.');
+    }
 
-    publik.login = function () {
-        var credentials = SkirmishDOM.getLoginCredentials();
-        SkirmishClient.login(credentials.email, credentials.password, SkirmishDOM.hideLoginForm);
-    };
+    function failedMove(data) {
+        SkirmishDOM.flash(data.responseJSON.message);
+    }
 
     publik.sendMove = function (rawMove) {
-        var unitIds;
+        SkirmishDOM.flash('Sending move');
 
-        unitIds = SkirmishGameState.getUnitIdsForCity({
+        var unitIds = SkirmishGameState.getUnitIdsForCity({
             unitCount: rawMove.unitCount,
             city: rawMove.originId,
         });
@@ -23,7 +25,7 @@ var SkirmishApp = (function () {
             targetId: rawMove.targetId,
             action: rawMove.moveType + '_unit',
             gameId: SkirmishGameState.gameId(),
-        });
+        }, succesfulMove, failedMove);
     };
 
     publik.start = function () {
@@ -34,24 +36,27 @@ var SkirmishApp = (function () {
     };
 
     publik.processUpdate = function (gameState) {
+        SkirmishDOM.flash('Processing');
+
         var cities;
 
         SkirmishGameState.process(gameState);
 
         cities = SkirmishGameState.cities();
 
-        SkirmishClient.getCurrentPlayerId(publik.updatePlayerId)
+        SkirmishClient.getCurrentPlayerId(publik.updatePlayerId);
 
         SkirmishMap.displayCities(cities);
 
         SkirmishApp.checkVictory();
 
+        SkirmishDOM.flash('Ready. Make a move.');
     };
 
     publik.updatePlayerId = function (data) {
-        console.log(data)
-        SkirmishGameState.setCurrentPlayerId(data.player_id)
-    }
+        console.log(data);
+        SkirmishGameState.setCurrentPlayerId(data.player_id);
+    };
 
     publik.joinNewGame = function () {
         SkirmishClient.joinNewGame(publik.processUpdate, function () {
@@ -60,6 +65,7 @@ var SkirmishApp = (function () {
     };
 
     publik.updateGameState = function () {
+        SkirmishDOM.flash('Updating');
         SkirmishClient.pullGameState(publik.processUpdate, publik.joinNewGame);
     };
 
@@ -67,6 +73,7 @@ var SkirmishApp = (function () {
         var winner = SkirmishGameState.getWinner();
 
         if (winner) {
+            SkirmishDOM.flash(winner + ' has won!');
             alert('Winner: ' + winner + '!');
         }
 
