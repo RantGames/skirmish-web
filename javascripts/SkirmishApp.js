@@ -3,8 +3,10 @@
 
 var SkirmishApp = (function () {
     var publik = {};
+    var hasMoved;
 
     function succesfulMove() {
+        hasMoved = true;
         SkirmishDOM.flash('Move submitted successfully. Waiting for other players.');
     }
 
@@ -13,6 +15,10 @@ var SkirmishApp = (function () {
     }
 
     publik.sendMove = function (rawMove) {
+        if (hasMoved) {
+            return false;
+        }
+
         SkirmishDOM.flash('Sending move');
 
         var unitIds = SkirmishGameState.getUnitIdsForCity({
@@ -36,6 +42,7 @@ var SkirmishApp = (function () {
     };
 
     publik.processUpdate = function (gameState) {
+        hasMoved = false;
         SkirmishDOM.flash('Processing');
 
         var cities;
