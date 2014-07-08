@@ -10,19 +10,51 @@ var SkirmishTroupMovement = (function () {
   var lastCityClicked = null;
 
   publik.clickHandler = function (city) {
-    if (lastCityClicked != null) {
-      if(city.playerId == SkirmishGameState.getCurrentPlayerId() &&
-        city.id == lastCityClicked.id) {
-        clickCount += 1;
-        console.log(lastCityClicked.id);
+    var moveType;
+    if (clickCount > 0 && lastCityClicked != null && lastCityClicked != city) {
+      if (lastCityClicked.playerId != city.playerId) {
+        moveType = 'attack'
       } else {
-        clickCount = 0;
-        console.log(lastCityClicked.id);
+        moveType = 'move'
+      }
+
+      var units = lastCityClicked.units.length
+      if (clickCount <= 5) { units = Math.ceil(units*clickCount/5) }
+
+      var rawMove = {
+        moveType: moveType,
+        originId: lastCityClicked.id,
+        targetId: city.id,
+        unitCount: units,
+      }
+
+      console.log(rawMove)
+      SkirmishApp.sendMove(rawMove);
+
+    }
+    clickCountUpdater(city);
+
+  };
+
+
+  var clickCountUpdater = function (city) {
+    var myCity = (city.playerId == SkirmishGameState.getCurrentPlayerId())
+    if (lastCityClicked != null) {
+      if( myCity && city.id == lastCityClicked.id) {
+        clickCount += 1;
+      } else {
+        if (myCity) {
+          clickCount = 1;
+        } else {
+          clickCount = 0;
+        }
       };
     }
     lastCityClicked = city
+
+    console.log(lastCityClicked.id);
     console.log(clickCount)
-  };
+  }
 
   publik.hoverHandler = function (city) {
     var cityCircle = SkirmishMap.displayCircle(city);

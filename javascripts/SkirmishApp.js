@@ -9,11 +9,8 @@ var SkirmishApp = (function () {
         SkirmishClient.login(credentials.email, credentials.password, SkirmishDOM.hideLoginForm);
     };
 
-    publik.sendMove = function () {
-        var rawMove,
-            unitIds;
-
-        rawMove = SkirmishDOM.getTestMove();
+    publik.sendMove = function (rawMove) {
+        var unitIds;
 
         unitIds = SkirmishGameState.getUnitIdsForCity({
             unitCount: rawMove.unitCount,

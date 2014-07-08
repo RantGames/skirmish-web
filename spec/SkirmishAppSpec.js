@@ -96,11 +96,7 @@ describe("SkirmishApp", function () {
             spyOn(SkirmishClient, 'sendMove');
             spyOn(SkirmishGameState, 'gameId').and.returnValue(7);
 
-            SkirmishApp.sendMove();
-        });
-
-        it("gets the move data from SkirmishDOM", function () {
-            expect(SkirmishDOM.getTestMove).toHaveBeenCalled();
+            SkirmishApp.sendMove(testMove);
         });
 
         it("gets the ids of the units to move", function () {
