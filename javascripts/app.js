@@ -1,4 +1,4 @@
-/*global $, jQuery, alert, SkirmishApp, SkirmishMap, document */
+/*global $, jQuery, alert, SkirmishApp, SkirmishClient, SkirmishMap, document */
 "use strict";
 
 $(document).ready(function () {

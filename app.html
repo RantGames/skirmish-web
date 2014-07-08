@@ -20,9 +20,14 @@
             <div>Garrison: {{city.units.length}} unit(s)</div>
         </div>
     </script>
-
+    <div><form action="/chat" method="post">
+        Trash talk: <input id="chat_message" name='chat_message' type="text" size="25" />
+        <input id="submit" type="submit" value="send">
+    </form>
+    <div id="chat-box" >Hello</div>
+    </div>
     <div id="message-bar" class="centered-text">Skirmish</div>
-    <div id="map-canvas"></div>
+    <div id="map-canvas">Chat</div>
 </body>
 
 <link rel="stylesheet" type="text/css" href="/skirmish-web/stylesheets/mapstylesheet.css"></link>
