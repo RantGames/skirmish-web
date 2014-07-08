@@ -7,15 +7,15 @@
 
 <body>
     <script id="mini-city-overlay-template" type="text/x-handlebars-template">
-        <div class="">
+        <div class="city-overlay">
             <img class="center" src="{{gravatar}}">
         </div>
     </script>
 
     <script id="city-overlay-template" type="text/x-handlebars-template">
-        <div class="city-overlay">
+        <div class="city-overlay big-city-overlay">
             <img class="center" src="{{gravatar}}">
-            <div><b>{{city.name}}</b></div>
+            <div><b>[{{city.id}}] {{city.name}}</b></div>
             <div>Owner: {{playerName}}</div>
             <div>Garrison: {{city.units.length}} unit(s)</div>
         </div>
