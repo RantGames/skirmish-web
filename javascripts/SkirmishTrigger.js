@@ -1,4 +1,4 @@
-/*global $, jQuery, SkirmishApp, Pusher */
+/*global $, jQuery, SkirmishApp, SkirmishDOM, SkirmishClient, Pusher */
 
 "use strict";
 
@@ -12,6 +12,8 @@ var SkirmishTrigger = (function () {
         pusher = new Pusher('013b1cfdc9072c8dbe04');
         channel = pusher.subscribe('skirmish_channel');
         publik.registerUpdateMapEvent(channel);
+        publik.registerUpdateChatEvent(channel);
+        SkirmishClient.registerChatClick();
     };
 
     publik.registerUpdateMapEvent = function (channel) {
@@ -20,6 +22,12 @@ var SkirmishTrigger = (function () {
                 SkirmishApp.updateGameState();
                 console.log('pulling new game state');
             }
+        });
+    };
+
+    publik.registerUpdateChatEvent = function (channel) {
+        channel.bind('chat_message', function (data) {
+            SkirmishDOM.chat(data.message);
         });
     };
 

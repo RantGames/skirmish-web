@@ -35,10 +35,6 @@ var SkirmishApp = (function () {
     };
 
     publik.start = function () {
-        SkirmishDOM.$testMoveForm.on('submit', function (e) {
-            e.preventDefault();
-            publik.sendMove();
-        });
     };
 
     publik.processUpdate = function (gameState) {

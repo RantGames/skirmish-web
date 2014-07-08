@@ -9,7 +9,8 @@ var SkirmishClient = (function () {
         showGameState: '/game_state/show',
         newGame: '/game_state/new',
         sendMove: '/move/create',
-        currentPlayerId: '/current_player_id'
+        currentPlayerId: '/current_player_id',
+        chat: '/chat'
     };
 
     function pullGameState(successCallback, errorCallback) {
@@ -21,6 +22,24 @@ var SkirmishClient = (function () {
             error: errorCallback,
         });
     }
+
+    function sendChat(message) {
+        $.ajax({
+            type: 'POST',
+            url: endpoints.chat,
+            data: { chat_message: message },
+            success: function(){console.log('chat sent')},
+            error: function(){console.log('chat fail')}
+        });
+    }
+
+    function registerChatClick() {
+        $("#submit").on("click", function() {
+           event.preventDefault();
+           var message = $('#chat_message').val();
+           sendChat(message);
+       });
+    };
 
     function joinNewGame(successCallback, errorCallback) {
         $.ajax({
@@ -61,7 +80,9 @@ var SkirmishClient = (function () {
         pullGameState: pullGameState,
         sendMove: sendMove,
         joinNewGame: joinNewGame,
-        getCurrentPlayerId: getCurrentPlayerId
+        getCurrentPlayerId: getCurrentPlayerId,
+        sendChat: sendChat,
+        registerChatClick: registerChatClick
     };
 
     return publicAttributes;
