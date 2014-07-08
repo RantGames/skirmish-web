@@ -1,4 +1,4 @@
-/*global $, jQuery, alert, document, SkirmishClient, SkirmishMap, SkirmishGameState, google, Handlebars */
+/*global $, jQuery, alert, document, SkimishTroupMovement, SkirmishClient, SkirmishMap, SkirmishGameState, google, Handlebars */
 "use strict";
 
 var SkirmishMap = (function () {
@@ -25,6 +25,8 @@ var SkirmishMap = (function () {
 
         mapOptions = {
             center: new google.maps.LatLng(39.8282, -98.5795),
+            disableDoubleClickZoom: true,
+            streetViewControl: false,
             zoom: 5
         };
 
@@ -33,8 +35,48 @@ var SkirmishMap = (function () {
         google.maps.event.addListener(map, 'zoom_changed', zoomChanged);
     }
 
+    function displayCircle(city) {
+      var range = 1000
+
+      var circleOptions = {
+          strokeColor: "#000FFF",
+          strokeOpacity: 0.35,
+          strokeWeight: 10,
+          fillColor: "#0000FF",
+          fillOpacity: .25,
+          map: map,
+          center: new google.maps.LatLng(city.latLng[0],city.latLng[1]),
+          radius: range * 1000
+        };
+
+        var cityCircle = new google.maps.Circle(circleOptions);
+        return cityCircle;
+    }
+
+    function clearCircle(cityCircle) {
+        cityCircle.setMap(null);
+    }
+
+
     function displayCity(city) {
-        overlays.push(new SkirmishMap.CityOverlay(city));
+        var cityOverlay = new SkirmishMap.CityOverlay(city)
+        overlays.push(cityOverlay);
+        setupDomClickListener(cityOverlay);
+        setupDomHoverListener(cityOverlay);
+    }
+
+
+    function setupDomClickListener(cityOverlay) {
+        console.log('set up event for city '+cityOverlay.overlay[0]);
+        google.maps.event.addDomListener(cityOverlay.overlay[0], 'click', function() {
+            SkirmishTroupMovement.clickHandler(cityOverlay.city);
+        });
+    }
+
+    function setupDomHoverListener(cityOverlay) {
+        google.maps.event.addDomListener(cityOverlay.overlay[0], 'mouseover', function() {
+            SkirmishTroupMovement.hoverHandler(cityOverlay.city);
+        });
     }
 
     function displayCities(cities) {
@@ -56,7 +98,7 @@ var SkirmishMap = (function () {
     function CityOverlay(city) {
         this.city = city;
         this.setMap(map);
-        this.overlay = $('<div>');
+        this.overlay = $('<div></div>');
     }
 
     function gravatarURL(gravatarHash) {
@@ -80,7 +122,8 @@ var SkirmishMap = (function () {
     };
 
     CityOverlay.prototype.renderHTML = function (html) {
-        this.overlay.html(html);
+        this.overlay.empty();
+        this.overlay.append($(html));
     };
 
     CityOverlay.prototype.gravatarURL = function () {
@@ -129,6 +172,9 @@ var SkirmishMap = (function () {
         initialize: initialize,
         CityOverlay: CityOverlay,
         clearOverlays: clearOverlays,
-    };
+        setupDomClickListener: setupDomClickListener,
+        displayCircle: displayCircle,
+        clearCircle: clearCircle
+     };
 
 }());

@@ -93,6 +93,26 @@ describe("SkirmishGameState", function () {
         });
     });
 
+    describe('currentPlayer', function() {
+        beforeEach(function (){
+            this.id = 6;
+        });
+
+        it('sets playerId', function () {
+            SkirmishGameState.setCurrentPlayerId(this.id);
+            expect(SkirmishGameState.game.currentPlayer.id).toEqual(this.id);
+        });
+
+        it('gets playerId', function () {
+            SkirmishGameState.game.currentPlayer.id = this.id;
+            expect(SkirmishGameState.getCurrentPlayerId()).toEqual(this.id);
+        });
+
+    });
+
+
+
+
     describe('cities()', function () {
         beforeEach(function () {
             this.mockCity = jasmine.createSpy('fake city');
@@ -163,3 +183,4 @@ describe("SkirmishGameState", function () {
         });
     });
 });
+

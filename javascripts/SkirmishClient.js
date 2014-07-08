@@ -9,6 +9,7 @@ var SkirmishClient = (function () {
         showGameState: '/game_state/show',
         newGame: '/game_state/new',
         sendMove: '/move/create',
+        currentPlayerId: '/current_player_id'
     };
 
     function pullGameState(successCallback, errorCallback) {
@@ -52,10 +53,15 @@ var SkirmishClient = (function () {
         });
     }
 
+    function getCurrentPlayerId(storePlayerId) {
+        $.getJSON(endpoints.currentPlayerId, storePlayerId);
+    }
+
     publicAttributes = {
         pullGameState: pullGameState,
         sendMove: sendMove,
         joinNewGame: joinNewGame,
+        getCurrentPlayerId: getCurrentPlayerId
     };
 
     return publicAttributes;

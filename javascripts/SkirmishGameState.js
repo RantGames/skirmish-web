@@ -3,6 +3,7 @@
 "use strict";
 var SkirmishGameState = (function () {
     var publik = {};
+
         // game = {};
 
     publik.game = {};
@@ -80,6 +81,15 @@ var SkirmishGameState = (function () {
             players: processPlayers(gameState.players)
         };
     };
+
+    publik.setCurrentPlayerId = function(playerId) {
+        publik.game.currentPlayer = { id: playerId };
+    }
+
+    publik.getCurrentPlayerId = function() {
+        return publik.game.currentPlayer.id;
+    }
+
 
     publik.getUnitIdsForCity = function (args) {
         var unitCount,
