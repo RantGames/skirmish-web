@@ -23,7 +23,7 @@ var SkirmishClient = (function () {
         });
     }
 
-    function sendChat(message) {
+    function sendChat(player) {
         $.ajax({
             type: 'POST',
             url: endpoints.chat,
