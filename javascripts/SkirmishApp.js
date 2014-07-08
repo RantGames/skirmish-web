@@ -58,7 +58,12 @@ var SkirmishApp = (function () {
     };
 
     publik.checkVictory = function () {
-        SkirmishGameState.getWinner();
+        var winner = SkirmishGameState.getWinner();
+
+        if (winner) {
+            alert('Winner: ' + winner + '!');
+        }
+
     };
 
     return publik;

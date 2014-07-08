@@ -1,4 +1,4 @@
-/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishMap, SkirmishDOM, SkirmishClient, SkirmishGameState, jasmine, context */
+/*global describe, it, $, spyOn, expect, beforeEach, SkirmishApp, SkirmishMap, SkirmishDOM, SkirmishClient, SkirmishGameState, jasmine, context, window */
 "use strict";
 describe("SkirmishApp", function () {
     describe('processUpdate()', function () {
@@ -87,6 +87,15 @@ describe("SkirmishApp", function () {
             SkirmishApp.checkVictory();
 
             expect(SkirmishGameState.getWinner).toHaveBeenCalled();
+        });
+
+        it('throws an alert if someone has won', function () {
+            spyOn(SkirmishGameState, 'getWinner').and.returnValue('Nick');
+            spyOn(window, 'alert');
+
+            SkirmishApp.checkVictory();
+
+            expect(window.alert).toHaveBeenCalledWith('Winner: Nick!');
         });
     });
 });
