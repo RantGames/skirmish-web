@@ -35,16 +35,45 @@ var SkirmishMap = (function () {
         google.maps.event.addListener(map, 'zoom_changed', zoomChanged);
     }
 
+    function displayCircle(city) {
+
+      var circleOptions = {
+          strokeColor: "#c4c4c4",
+          strokeOpacity: 0.35,
+          strokeWeight: 0,
+          fillColor: "#0000FF",
+          fillOpacity: .35,
+          map: map,
+          center: new google.maps.LatLng(city.latLng[0],city.latLng[1]),
+          radius: 200000
+        };
+
+        var cityCircle = new google.maps.Circle(circleOptions);
+        return cityCircle;
+    }
+
+    function clearCircle(cityCircle) {
+        cityCircle.setMap(null);
+    }
+
+
     function displayCity(city) {
         var cityOverlay = new SkirmishMap.CityOverlay(city)
         overlays.push(cityOverlay);
         setupDomClickListener(cityOverlay);
+        setupDomHoverListener(cityOverlay);
     }
 
     function setupDomClickListener(cityOverlay) {
         console.log('set up event for city '+cityOverlay.overlay[0]);
         google.maps.event.addDomListener(cityOverlay.overlay[0], 'click', function() {
             SkirmishTroupMovement.clickHandler(cityOverlay.city);
+        });
+    }
+
+    function setupDomHoverListener(cityOverlay) {
+        google.maps.event.addDomListener(cityOverlay.overlay[0], 'mouseover', function() {
+            SkirmishTroupMovement.hoverHandler(cityOverlay.city);
         });
     }
 
@@ -67,7 +96,7 @@ var SkirmishMap = (function () {
     function CityOverlay(city) {
         this.city = city;
         this.setMap(map);
-        this.overlay = $('<div>');
+        this.overlay = $('<div></div>');
     }
 
     function gravatarURL(playerId) {
@@ -91,7 +120,8 @@ var SkirmishMap = (function () {
     };
 
     CityOverlay.prototype.renderHTML = function (html) {
-        this.overlay.html(html);
+        this.overlay.empty();
+        this.overlay.append($(html));
     };
 
     CityOverlay.prototype.renderFullTemplate = function () {
@@ -136,7 +166,9 @@ var SkirmishMap = (function () {
         initialize: initialize,
         CityOverlay: CityOverlay,
         clearOverlays: clearOverlays,
-        setupDomClickListener: setupDomClickListener
-    };
+        setupDomClickListener: setupDomClickListener,
+        displayCircle: displayCircle,
+        clearCircle: clearCircle
+     };
 
 }());
