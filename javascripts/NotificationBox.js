@@ -41,7 +41,7 @@ var NotificationBox = React.createClass({
     this.props.channel.bind('notification', function(data) {
       console.log(data);
       if(data.target_player == null || that.props.playerId == data.target_player) {
-        that.props.messages.push({
+        that.props.messages.unshift({
           tag: data.tag,
           time: data.time,
           contents: data.contents
