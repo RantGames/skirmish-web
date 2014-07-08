@@ -47,11 +47,15 @@ var SkirmishApp = (function () {
 
         cities = SkirmishGameState.cities();
 
-        // SkirmishClient.getCurrentPlayerId(setCurrentPlayerId)
+        SkirmishClient.getCurrentPlayerId(publik.updatePlayerId)
 
         SkirmishMap.displayCities(cities);
 
     };
+
+    publik.updatePlayerId = function (data) {
+        SkirmishGameState.setCurrentPlayerId(data.user_id)
+    }
 
     publik.joinNewGame = function () {
         SkirmishClient.joinNewGame(publik.processUpdate, function () {

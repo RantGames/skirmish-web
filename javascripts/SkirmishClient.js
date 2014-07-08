@@ -10,7 +10,7 @@ var SkirmishClient = (function () {
         showGameState: '/game_state/show',
         newGame: '/game_state/new',
         sendMove: '/move/create',
-        // currentPlayerId: '/current_player_id'
+        currentPlayerId: '/current_player_id'
     };
 
     function login(email, password, successCallback, errorCallback) {
@@ -81,7 +81,7 @@ var SkirmishClient = (function () {
         pullGameState: pullGameState,
         sendMove: sendMove,
         joinNewGame: joinNewGame,
-        // getCurrentPlayerId: getCurrentPlayerId
+        getCurrentPlayerId: getCurrentPlayerId
     };
 
     return publicAttributes;

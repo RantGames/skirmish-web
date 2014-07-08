@@ -116,4 +116,15 @@ describe("SkirmishApp", function () {
             });
         });
     });
+
+    describe("updatePlayerId()", function () {
+        it('tells SkirmishGameState to set the current player id', function() {
+            spyOn(SkirmishGameState, 'setCurrentPlayerId');
+            var fakeId = 2;
+            var fakeData = {user_id: fakeId};
+            SkirmishApp.updatePlayerId(fakeData);
+
+            expect(SkirmishGameState.setCurrentPlayerId).toHaveBeenCalledWith(fakeId);
+        })
+    })
 });

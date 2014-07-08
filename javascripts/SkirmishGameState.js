@@ -64,13 +64,10 @@ var SkirmishGameState = (function () {
 
             publik.game.players[player.id] = player.name;
         }
-
-        publik.game.currentPlayer = {}
-
     };
 
     publik.setCurrentPlayerId = function(playerId) {
-        publik.game.currentPlayer.id = playerId;
+        publik.game.currentPlayer = { id: playerId };
     }
 
     publik.getCurrentPlayerId = function() {
