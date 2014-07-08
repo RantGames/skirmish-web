@@ -65,11 +65,16 @@ var SkirmishGameState = (function () {
         return processCities(rawCities);
     }
 
+    function getPlayerName(id) {
+        return publik.game.players[id];
+    }
+
     publik.process = function (data) {
         var gameState = data.game;
 
         publik.game = {
             id: gameState.id,
+            winner: gameState.winner,
             cities: processCitiesFromPlayers(gameState.players),
             players: processPlayers(gameState.players)
         };
@@ -98,6 +103,10 @@ var SkirmishGameState = (function () {
 
     publik.players = function () {
         return publik.game.players;
+    };
+
+    publik.getWinner = function () {
+        return getPlayerName(publik.game.winner);
     };
 
     return publik;

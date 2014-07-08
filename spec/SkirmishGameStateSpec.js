@@ -3,9 +3,11 @@
 
 describe("SkirmishGameState", function () {
     beforeEach(function () {
+        this.fakeWinner = jasmine.createSpy('winner');
         this.gameState = {
             game: {
                 id: 1,
+                winner: this.fakeWinner,
                 players: [
                     {
                         id: 2,
@@ -49,6 +51,10 @@ describe("SkirmishGameState", function () {
         });
 
         describe('processing cities', function () {
+            it('sets the winner', function () {
+                expect(SkirmishGameState.game.winner).toEqual(this.fakeWinner);
+            });
+
             it('sets the city name', function () {
                 expect(this.city.name).toBe('123 Fake St');
             });
@@ -143,6 +149,17 @@ describe("SkirmishGameState", function () {
             SkirmishGameState.game.players = fakePlayers;
 
             expect(SkirmishGameState.players()).toEqual(fakePlayers);
+        });
+    });
+
+    describe('getWinner()', function () {
+        it('returns the name of the winner', function () {
+            SkirmishGameState.game = {
+                players: {1: 'Test'},
+                winner: 1
+            };
+
+            expect(SkirmishGameState.getWinner()).toBe('Test');
         });
     });
 });

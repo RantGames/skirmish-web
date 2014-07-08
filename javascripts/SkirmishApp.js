@@ -38,6 +38,8 @@ var SkirmishApp = (function () {
         cities = SkirmishGameState.cities();
 
         SkirmishMap.displayCities(cities);
+
+        SkirmishApp.checkVictory();
     };
 
     publik.joinNewGame = function () {
@@ -48,6 +50,15 @@ var SkirmishApp = (function () {
 
     publik.updateGameState = function () {
         SkirmishClient.pullGameState(publik.processUpdate, publik.joinNewGame);
+    };
+
+    publik.checkVictory = function () {
+        var winner = SkirmishGameState.getWinner();
+
+        if (winner) {
+            alert('Winner: ' + winner + '!');
+        }
+
     };
 
     return publik;
