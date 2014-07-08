@@ -6,12 +6,18 @@
 
 
 <body>
+    <script id="mini-city-overlay-template" type="text/x-handlebars-template">
+        <div class="">
+            <img class="center" src="{{gravatar}}">
+        </div>
+    </script>
 
     <script id="city-overlay-template" type="text/x-handlebars-template">
         <div class="city-overlay">
-            <div><b>{{name}}</b></div>
+            <img class="center" src="{{gravatar}}">
+            <div><b>{{city.name}}</b></div>
             <div>Owner: {{playerName}}</div>
-            <div>Units Garrisoned: {{units.length}}</div>
+            <div>Garrison: {{city.units.length}} unit(s)</div>
         </div>
     </script>
 
@@ -38,5 +44,7 @@
 <script src="/skirmish-web/javascripts/SkirmishDOM.js" type="text/javascript"></script>
 <script src="/skirmish-web/javascripts/SkirmishApp.js" type="text/javascript"></script>
 <script src="/skirmish-web/javascripts/SkirmishTrigger.js" type="text/javascript"></script>
+<script src="/skirmish-web/javascripts/SkirmishTroupMovement.js" type="text/javascript"></script>
+
 <script src="/skirmish-web/javascripts/app.js" type="text/javascript"></script>
 <script src="//js.pusher.com/2.2/pusher.min.js"></script>
