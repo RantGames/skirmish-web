@@ -79,4 +79,14 @@ describe("SkirmishApp", function () {
             });
         });
     });
+
+    describe('checkVictory()', function () {
+        it('checks SkirmishGameState to see if someone has won', function () {
+            spyOn(SkirmishGameState, 'getWinner');
+
+            SkirmishApp.checkVictory();
+
+            expect(SkirmishGameState.getWinner).toHaveBeenCalled();
+        });
+    });
 });

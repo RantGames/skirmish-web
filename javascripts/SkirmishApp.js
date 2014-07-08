@@ -58,7 +58,7 @@ var SkirmishApp = (function () {
     };
 
     publik.checkVictory = function () {
-        throw 'SkimishApp#checkVictory - not implemented';
+        SkirmishGameState.getWinner();
     };
 
     return publik;
