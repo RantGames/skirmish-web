@@ -23,7 +23,7 @@ var SkirmishClient = (function () {
         });
     }
 
-    function sendChat() {
+    function sendChat(event) {
         event.preventDefault();
         var message = $('#chat_message').val();
         $.ajax({
