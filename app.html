@@ -8,9 +8,10 @@
     <script src="/skirmish-web/javascripts/NotificationBox.js" type="text/jsx"></script>
     <style>
       #notification-box {
-        width:20%;
-        height: 15%;
+        width:30%;
+        height: 25%;
         position: absolute;
+        overflow: scroll;
         right: 0;
         bottom: 0;
       }
@@ -28,10 +29,11 @@
         setTimeout(function() {
           var pusher = new Pusher('013b1cfdc9072c8dbe04');
           var channel = pusher.subscribe('skirmish_channel');
-
+          SkirmishClient.getCurrentPlayerId(SkirmishClient.updatePlayerId);
           React.renderComponent(new NotificationBox({
             messages: SkirmishApp.messageBox.all,
-            channel:  channel
+            channel:  channel,
+            playerId: SkirmishGameState.getCurrentPlayerId()
           }), document.getElementById("notification-box"))
         }, 1000);
 
