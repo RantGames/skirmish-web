@@ -165,7 +165,6 @@ var SkirmishMap = (function () {
 
 
     function setupDomClickListener(cityOverlay) {
-
         google.maps.event.addDomListener(cityOverlay.overlay[0], 'click', function() {
             SkirmishTroupMovement.clickHandler(cityOverlay.city);
         });

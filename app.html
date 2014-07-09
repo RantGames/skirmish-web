@@ -12,10 +12,11 @@
         setTimeout(function() {
           var pusher = new Pusher('013b1cfdc9072c8dbe04');
           var channel = pusher.subscribe('skirmish_channel');
-
+          SkirmishClient.getCurrentPlayerId(SkirmishClient.updatePlayerId);
           React.renderComponent(new NotificationBox({
             messages: SkirmishApp.messageBox.all,
-            channel:  channel
+            channel:  channel,
+            playerId: SkirmishGameState.getCurrentPlayerId()
           }), document.getElementById("notification-box"))
         }, 1000);
 

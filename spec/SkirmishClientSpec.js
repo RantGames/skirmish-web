@@ -48,7 +48,6 @@ describe("SkirmishClient", function () {
         beforeEach(function () {
             spyOn($, 'ajax');
             SkirmishClient.pullGameState();
-
             this.requestArgs = $.ajax.calls.argsFor(0)[0];
         });
 
@@ -64,4 +63,46 @@ describe("SkirmishClient", function () {
             expect(this.requestArgs.dataType).toBe('json');
         });
     });
+
+    describe("getCurrentPlayerId", function() {
+
+        it('does getJSON call for player id', function () {
+            spyOn($, 'getJSON')
+            SkirmishClient.getCurrentPlayerId();
+            expect($.getJSON).toHaveBeenCalled();
+        });
+    });
+
+    describe("trash talk chat", function() {
+
+        describe("sending chat message", function() {
+            beforeEach( function () {
+                spyOn($, 'ajax');
+                spyOn($.fn, 'val').and.returnValue('Great day')
+                SkirmishClient.sendChat();
+                this.requestArgs = $.ajax.calls.argsFor(0)[0];
+            });
+
+            it('makes a POST request', function (){
+                expect(this.requestArgs.type).toEqual('POST');
+            });
+
+            it("sends to the game_state/show url", function () {
+                expect(this.requestArgs.url).toEqual('/chat');
+            });
+
+            it('sends message data', function () {
+                expect(this.requestArgs.data.chat_message).toEqual('Great day')
+            });
+
+        });
+
+        it('registers click button', function() {
+            spyOn($.fn, "on");
+            SkirmishClient.registerChatClick();
+            expect($().on).toHaveBeenCalled();
+        });
+
+
+    })
 });

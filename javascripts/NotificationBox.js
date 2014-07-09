@@ -39,12 +39,15 @@ var NotificationBox = React.createClass({
   componentDidMount: function() {
     var that = this;
     this.props.channel.bind('notification', function(data) {
-      that.props.messages.push({
-        tag: data.tag,
-        time: data.time,
-        contents: data.contents
-      })
-      that.forceUpdate();
+      console.log(data);
+      if(data.target_player == null || that.props.playerId == data.target_player) {
+        that.props.messages.unshift({
+          tag: data.tag,
+          time: data.time,
+          contents: data.contents
+        });
+        that.forceUpdate();
+      }
     });
     this.interval = setInterval(this.update, 10000);
   },

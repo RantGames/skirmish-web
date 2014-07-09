@@ -47,6 +47,7 @@ body { height: 100%; margin: 0; padding: 0 }
 }
 
 #notification-box {
+  background-color: white;
   width:20%;
   height: 15%;
   position: absolute;
