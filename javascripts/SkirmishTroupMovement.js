@@ -16,11 +16,13 @@ var SkirmishTroupMovement = (function () {
     if (publik.validMoveClick(city, lastCityClicked)) {
 
       var rawMove = publik.collateRawMove(lastCityClicked, city)
-      console.log(rawMove)
       SkirmishApp.sendMove(rawMove);
-
     }
     clickCountUpdater(city);
+    if (myCity(city)) {
+      SkirmishDOM.flash(clickCount*20 +'% of units selected in '+city.name)
+    }
+
   };
 
   publik.collateRawMove = function(lastCityClicked, city) {
@@ -50,30 +52,29 @@ var SkirmishTroupMovement = (function () {
   publik.validMoveClick = function(city, lastCityClicked) {
     return (clickCount > 0 &&
       lastCityClicked != null &&
-      lastCityClicked.id != city.id &&
+      !sameCity(city, lastCityClicked) &&
       SkirmishGeo.checkRange(city, lastCityClicked)
       );
   };
 
+  var sameCity = function(city, lastCityClicked) {
+    return (lastCityClicked.id == city.id);
+  };
+
   var clickCountUpdater = function (city) {
-    var myCity = (city.playerId == SkirmishGameState.getCurrentPlayerId())
 
     console.log('Player: '+SkirmishGameState.getCurrentPlayerId())
-    if( myCity && city.id == lastCityClicked.id) {
-      clickCount += 1;
-      if (clickCount > 5) {clickCount = 5};
-      SkirmishDOM.flash(clickCount*20 +'% of units selected in '+city.name)
+    if(myCity(city) && sameCity(city, lastCityClicked)) {
+      clickCount = (clickCount > 5 ? 5 : clickCount + 1)
     } else {
-      if (myCity) {
-        clickCount = 1;
-        SkirmishDOM.flash('20% of units selected in '+city.name)
-      } else {
-        clickCount = 0;
-      }
+      clickCount = (myCity(city) ? 1 : 0)
     };
 
     lastCityClicked = city
+  }
 
+  var myCity = function(city) {
+    return (city.playerId == SkirmishGameState.getCurrentPlayerId())
   }
 
   publik.hoverHandler = function (city) {

@@ -62,4 +62,9 @@ describe("Troup Movement and Attack", function () {
 
   });
 
+  describe('validates click count updater', function () {
+
+  });
+
+
 });
