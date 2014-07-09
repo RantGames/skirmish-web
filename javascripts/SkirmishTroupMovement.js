@@ -8,6 +8,11 @@ var SkirmishTroupMovement = (function () {
   var clickCount = 0;
   var lastCityClicked = {id:-1};
 
+  publik.setDefaults = function() {
+    clickCount = 0
+    lastCityClicked = {id:-1};
+  }
+
   publik.clickCount = function () { clickCount};
   publik.setClickCount = function (value) {clickCount = value}
 
@@ -89,7 +94,6 @@ var SkirmishTroupMovement = (function () {
   var isAttack = function(lastCityClicked, city) {
     return lastCityClicked.playerId != city.playerId
   };
-
 
 
   return publik
