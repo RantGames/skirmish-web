@@ -81,7 +81,8 @@ var SkirmishClient = (function () {
         joinNewGame: joinNewGame,
         getCurrentPlayerId: getCurrentPlayerId,
         sendChat: sendChat,
-        registerChatClick: registerChatClick
+        registerChatClick: registerChatClick,
+        endPoints: endpoints
     };
 
     return publicAttributes;

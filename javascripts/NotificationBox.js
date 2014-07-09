@@ -1,10 +1,9 @@
 /** @jsx React.DOM */
-
 var Message = React.createClass({
   render: function() {
     time = moment(this.props.time);
-    now = moment().unix();
-    minutes_ago = time.diff(now, 'minutes', false);
+    now = moment(+moment());
+    minutes_ago = now.diff(time, 'minutes', false);
     // todo fix time updating
     return (
       <tr>
@@ -33,23 +32,53 @@ var MessageWindow = React.createClass({
   }
 });
 
+var ChatInput = React.createClass({
+  sendChatMessage: function() {
+    console.log('aaa');
+    var message = this.refs.chatBox.getDOMNode().value.trim();
+
+    if(!message) return false;
+
+    $.ajax({
+      type: 'POST',
+      url: this.props.chatEndpoint,
+      data: { chat_message: message },
+      failure: function () {SkirmishDOM.flash('Failed to submit chat message')}
+    });
+
+    this.refs.chatBox.getDOMNode().value = '';
+    return false;
+  },
+  handleKeyDown: function(e) {
+    if(e.keyCode == 13) //13 is enter
+      this.sendChatMessage();
+  },
+  render: function() {
+    return (
+      <div id='chat-input'>
+        <input type='text' ref='chatBox' onKeyDown={this.handleKeyDown}/>
+        <button onClick={this.sendChatMessage}>Submit</button>
+      </div>
+    );
+  }
+});
+
 
 
 var NotificationBox = React.createClass({
   componentDidMount: function() {
     var that = this;
     this.props.channel.bind('notification', function(data) {
-      console.log(data);
       if(data.target_player == null || that.props.playerId == data.target_player) {
         that.props.messages.unshift({
           tag: data.tag,
           time: data.time,
           contents: data.contents
         });
-        that.forceUpdate();
+        that.update();
       }
     });
-    this.interval = setInterval(this.update, 10000);
+    this.interval = setInterval(this.update, 200);
   },
   update: function() {
     this.forceUpdate();
@@ -58,7 +87,12 @@ var NotificationBox = React.createClass({
     clearInterval(this.interval);
   },
   render: function() {
-    return (<MessageWindow messages={this.props.messages} hovered={false}/>)
+    return (
+      <div>
+        <MessageWindow messages={this.props.messages} hovered={false}/>
+        <ChatInput chatEndpoint={this.props.chatEndpoint} />
+      </div>
+    );
   }
 });
 
