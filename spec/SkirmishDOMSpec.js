@@ -2,10 +2,17 @@
 "use strict";
 
 describe("SkirmishDOM", function () {
-  xit ('sends flash message', function () {
-    spyOn($.fn, 'text')
+
+  it('sets the text of the chat box', function () {
+    spyOn(SkirmishDOM.$chatBox, 'text');
+    SkirmishDOM.chat('howdy');
+    expect(SkirmishDOM.$chatBox.text).toHaveBeenCalledWith('howdy');
+  });
+
+  it('sets the text of the flash message', function () {
+    spyOn(SkirmishDOM.$messageBar, 'text');
     SkirmishDOM.flash('howdy');
-    expect(document.getElementById('#message-bar').html).toEqual('howdy')
+    expect(SkirmishDOM.$messageBar.text).toHaveBeenCalledWith('howdy');
   });
 
 });

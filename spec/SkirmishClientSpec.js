@@ -81,7 +81,8 @@ describe("SkirmishClient", function () {
             beforeEach( function () {
                 spyOn($, 'ajax');
                 spyOn($.fn, 'val').and.returnValue('Great day')
-                SkirmishClient.sendChat();
+                var event = {preventDefault: function() {}};
+                SkirmishClient.sendChat(event);
                 this.requestArgs = $.ajax.calls.argsFor(0)[0];
             });
 
