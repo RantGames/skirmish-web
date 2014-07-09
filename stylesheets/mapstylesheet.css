@@ -24,7 +24,7 @@ body { height: 100%; margin: 0; padding: 0 }
     position: absolute;
     right: 1%;
     z-index: 2;
-    background-color: rgba(1,1,1,0.1);
+    background-color: rgba(1,1,1,0.3);
     width: 17.5%;
     text-align: center;
 }
@@ -85,7 +85,7 @@ body { height: 100%; margin: 0; padding: 0 }
 
 #notification-box {
     z-index: 2;
-    width: 17.5%%;
+    min-width: 300px;
     height: 50%;
     right: 1%;
     bottom: 2%;
@@ -95,7 +95,7 @@ body { height: 100%; margin: 0; padding: 0 }
     font-family: arial;
     font-weight: lighter;
     position: absolute;
-    background-color: rgba(1,1,1,0.1);
+    background-color: rgba(1,1,1,0.3);
     text-align: center;
 }
 
@@ -119,13 +119,9 @@ table {
 
 
 #chat-input {
-  position: absolute;
-  width: 17.5%;
+  position: relative;
 }
 
-#chat-input input {
-  width: 100%;
-}
 
 
 

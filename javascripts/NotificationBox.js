@@ -56,7 +56,7 @@ var ChatInput = React.createClass({
     return (
       <div id='chat-input'>
         <input type='text' ref='chatBox' onKeyDown={this.handleKeyDown}/>
-        <button onClick={this.sendChatMessage}>Submit</button>
+        <button onClick={this.sendChatMessage}>Send</button>
       </div>
     );
   }
@@ -88,8 +88,8 @@ var NotificationBox = React.createClass({
   render: function() {
     return (
       <div>
-        <MessageWindow messages={this.props.messages} hovered={false}/>
         <ChatInput chatEndpoint={this.props.chatEndpoint} />
+        <MessageWindow messages={this.props.messages} hovered={false}/>
       </div>
     );
   }
