@@ -15,6 +15,8 @@ var SkirmishDOM = (function () {
     }
 
     return {
+        $chatBox: $chatBox,
+        $messageBar: $messageBar,
         flash: flash,
         chat: chat
     };

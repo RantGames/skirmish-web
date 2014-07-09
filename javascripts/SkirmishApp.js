@@ -9,7 +9,9 @@ var SkirmishApp = (function () {
     }
 
     function failedMove(data) {
-        SkirmishDOM.flash(data.responseJSON.message);
+        if (data.responseJSON) {
+            SkirmishDOM.flash(data.responseJSON.message);
+        }
     }
 
     publik.sendMove = function (rawMove) {
