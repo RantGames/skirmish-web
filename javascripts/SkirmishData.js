@@ -1,6 +1,5 @@
 var SkirmishData = (function(){
 
-	
 
 	var processJson = function(data){
 		var cityArray = [];
