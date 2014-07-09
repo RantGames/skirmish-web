@@ -23,7 +23,7 @@ var SkirmishClient = (function () {
         });
     }
 
-    function sendChat() {
+    function sendChat(event) {
         event.preventDefault();
         var message = $('#chat_message').val();
         $.ajax({
@@ -36,7 +36,7 @@ var SkirmishClient = (function () {
     }
 
     function registerChatClick() {
-        $("#submit").on("click", sendChat)
+        $("#submit").on("click", sendChat);
     };
 
     function joinNewGame(successCallback, errorCallback) {
@@ -53,8 +53,9 @@ var SkirmishClient = (function () {
         var serverFormattedMove = {
             move: {
                 action: move.action,
-                origin_ids: move.originIds,
+                origin_id: move.originId,
                 target_id: move.targetId,
+                quantity: move.quantity,
             },
             game_id: move.gameId,
         };
