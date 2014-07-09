@@ -37,7 +37,7 @@ body { height: 100%; margin: 0; padding: 0 }
 .mini-city-overlay h4 {
     font-size: 12px;
     font-weight: lighter;
-    color: white;
+    color: #475F82;
     margin: 1px;
 }
 
@@ -52,7 +52,7 @@ body { height: 100%; margin: 0; padding: 0 }
     visibility:visible;
     font-size: 12px;
     font-weight: lighter;
-    color: white;
+    color: #475F82;
     margin: 1px;
 }
 
@@ -116,3 +116,24 @@ table {
 .notice {
   color: #2980b9;
 }
+
+
+#chat-input {
+  position: absolute;
+  width: 17.5%;
+}
+
+#chat-input input {
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+

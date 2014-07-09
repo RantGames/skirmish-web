@@ -82,14 +82,14 @@ var SkirmishMap = (function () {
             featureType: "administrative.country",
             elementType: "label",
             stylers: [
-                { color: "#B3903C" },
+                { color: "#475F82" },
             ]
         },
         {
             featureType: "administrative.country",
             elementType: "label.text",
             stylers: [
-                { color: "#FFFFFF" },
+                { color: "#475F82" },
             ]
         },
         {
@@ -177,9 +177,23 @@ var SkirmishMap = (function () {
 
     function setupDomHoverListener(cityOverlay) {
         google.maps.event.addDomListener(cityOverlay.overlay[0], 'mouseover', function () {
-            SkirmishTroupMovement.hoverHandler(cityOverlay.city);
+            hoverHandler(cityOverlay);
         });
     }
+
+    function hoverHandler(cityOverlay) {
+        var cityCircle = SkirmishMap.displayCircle(cityOverlay.city);
+        setupDomHoverOffListener(cityOverlay, cityCircle)
+    }
+
+    function setupDomHoverOffListener(cityOverlay, cityCircle) {
+        google.maps.event.addDomListener(cityOverlay.overlay[0], 'mouseout', function() {
+            setTimeout(function() {
+                SkirmishMap.clearCircle(cityCircle)
+            }, 50);
+        });
+    }
+
 
     function displayCity(city) {
         var cityOverlay = new SkirmishMap.CityOverlay(city);

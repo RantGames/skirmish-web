@@ -1,4 +1,4 @@
-/*global $, jQuery, alert, SkirmishDOM, SkirmishClient, SkirmishMap, SkirmishGameState */
+/*global $, jQuery, alert, SkirmishDOM, SkirmishClient, SkirmishTroupMovement, SkirmishMap, SkirmishGameState */
 "use strict";
 
 var SkirmishApp = (function () {
@@ -39,6 +39,8 @@ var SkirmishApp = (function () {
         cities = SkirmishGameState.cities();
 
         SkirmishClient.getCurrentPlayerId(publik.updatePlayerId);
+
+        SkirmishTroupMovement.setDefaults();
 
         SkirmishMap.displayCities(cities);
 
