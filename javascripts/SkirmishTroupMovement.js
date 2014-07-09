@@ -13,21 +13,24 @@ var SkirmishTroupMovement = (function () {
 
   publik.clickHandler = function (city) {
 
-    if (publik.validMoveClick(city, lastCityClicked)) {
-
+    if (publik.validMoveClick(lastCityClicked, city)) {
       var rawMove = publik.collateRawMove(lastCityClicked, city)
       SkirmishApp.sendMove(rawMove);
     }
-    clickCountUpdater(city);
+
+    publik.clickCountUpdater(lastCityClicked, city);
+
     if (myCity(city)) {
       SkirmishDOM.flash(clickCount*20 +'% of units selected in '+city.name)
     }
+
+    lastCityClicked = city;
 
   };
 
   publik.collateRawMove = function(lastCityClicked, city) {
 
-    var moveType = isAttack(city, lastCityClicked) ? 'attack' : 'move'
+    var moveType = isAttack(lastCityClicked, city) ? 'attack' : 'move'
 
     var rawMove = {
       moveType: moveType,
@@ -45,44 +48,47 @@ var SkirmishTroupMovement = (function () {
     return units
   };
 
-  var isAttack = function(city, lastCityClicked) {
-    return lastCityClicked.playerId != city.playerId
-  };
-
-  publik.validMoveClick = function(city, lastCityClicked) {
+  publik.validMoveClick = function(lastCityClicked, city) {
     return (clickCount > 0 &&
       lastCityClicked != null &&
-      !sameCity(city, lastCityClicked) &&
-      SkirmishGeo.checkRange(city, lastCityClicked)
+      !sameCity(lastCityClicked, city) &&
+      SkirmishGeo.checkRange(lastCityClicked, city)
       );
   };
 
-  var sameCity = function(city, lastCityClicked) {
-    return (lastCityClicked.id == city.id);
-  };
+  publik.clickCountUpdater = function (lastCityClicked, city) {
 
-  var clickCountUpdater = function (city) {
-
-    console.log('Player: '+SkirmishGameState.getCurrentPlayerId())
-    if(myCity(city) && sameCity(city, lastCityClicked)) {
-      clickCount = (clickCount > 5 ? 5 : clickCount + 1)
+    if(myCity(city) && sameCity(lastCityClicked, city)) {
+      clickCount = (clickCount >= 5 ? 5 : clickCount + 1)
     } else {
       clickCount = (myCity(city) ? 1 : 0)
     };
+    return clickCount
+  }
 
-    lastCityClicked = city
+  publik.setClickCount = function (value) {
+    clickCount = value;
+  }
+
+  publik.lastCityClicked = function () {
+    return lastCityClicked;
+  }
+
+  publik.setLastCityClicked = function (value) {
+    lastCityClicked = value;
   }
 
   var myCity = function(city) {
     return (city.playerId == SkirmishGameState.getCurrentPlayerId())
   }
 
-  publik.hoverHandler = function (city) {
-    var cityCircle = SkirmishMap.displayCircle(city);
-    setTimeout(function() {
-        SkirmishMap.clearCircle(cityCircle)
-    }, 1500);
-  }
+  var sameCity = function(lastCityClicked, city) {
+    return (lastCityClicked.id == city.id);
+  };
+
+  var isAttack = function(lastCityClicked, city) {
+    return lastCityClicked.playerId != city.playerId
+  };
 
   return publik
 

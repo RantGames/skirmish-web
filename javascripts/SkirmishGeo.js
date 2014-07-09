@@ -4,7 +4,7 @@ var SkirmishGeo = (function () {
 
   var publik = {};
 
-  publik.checkRange = function(originCity, targetCity) {
+  publik.checkRange = function(targetCity, originCity) {
     var p1 = {};
     var p2 = {};
     var range = 1000;
