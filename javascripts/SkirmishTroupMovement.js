@@ -21,17 +21,20 @@ var SkirmishTroupMovement = (function () {
     if (publik.validMoveClick(previousCityClicked, city)) {
       var rawMove = publik.collateRawMove(previousCityClicked, city)
       SkirmishApp.sendMove(rawMove);
-    }
-
-    publik.clickCountUpdater(previousCityClicked, city);
-
-    if (myCity(city)) {
-      var plurUnit = clickCount == 1 ? 'unit' : 'units'
-      SkirmishDOM.flash(clickCount+' '+plurUnit+' selected in '+city.name)
+      city = previousCityClicked;
+      clickCount = 0;
+    } else {
+      publik.clickCountUpdater(previousCityClicked, city);
+      if (myCity(city)) { sendUpdateMsg(city, clickCount) }
     }
 
     previousCityClicked = city;
 
+  };
+
+  var sendUpdateMsg = function(city, clickCount) {
+    var plurUnit = (clickCount == 1 ? 'unit' : 'units');
+    SkirmishDOM.flash(clickCount+' '+plurUnit+' selected in '+city.name);
   };
 
   publik.collateRawMove = function(previousCityClicked, city) {
@@ -65,9 +68,12 @@ var SkirmishTroupMovement = (function () {
 
   publik.clickCountUpdater = function (previousCityClicked, city) {
     var max = maxClickCount(previousCityClicked, city)
+    console.log(myCity(city))
+    console.log(sameCity(previousCityClicked, city))
     if(myCity(city) && sameCity(previousCityClicked, city)) {
       clickCount = (clickCount >= max ? max : clickCount + 1)
     } else {
+      console.log(max)
       if (myCity(city) && max > 0) {clickCount = 1}
       else {clickCount = 0}
     };
@@ -75,11 +81,11 @@ var SkirmishTroupMovement = (function () {
     return clickCount
   }
 
-  var maxClickCount = function (previousCityClicked, city) {
-    if (previousCityClicked.id == -1) {
-      return city.units.length;
+  var maxClickCount = function (previousCity, city) {
+    if (previousCity.id == -1) {
+      return (city.units.length >= 2 ? city.units.length - 1 : 0);
     } else {
-      return previousCityClicked.units.length;
+      return (previousCity.units.length >= 2 ? previousCity.units.length - 1 : 0);
     }
   }
 
