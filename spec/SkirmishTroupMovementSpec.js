@@ -26,7 +26,7 @@ describe("Troup Movement and Attack", function () {
     })
 
     it('updates last city clicked', function () {
-      spyOn(SkirmishTroupMovement, 'validMoveClick').and.returnValue(true);
+      spyOn(SkirmishTroupMovement, 'validMoveClick').and.returnValue(false);
       SkirmishTroupMovement.setPreviousCityClicked(this.lastCity)
       SkirmishTroupMovement.clickHandler(this.city);
       expect(SkirmishTroupMovement.previousCityClicked()).toEqual(this.city)
@@ -101,10 +101,10 @@ describe("Troup Movement and Attack", function () {
       expect(result).toEqual(0);
     });
 
-    it('limits clickCount to 5 on own same city', function (){
+    it('limits clickCount to 1 less than units on own same city', function (){
       SkirmishTroupMovement.setClickCount(5);
       var result = SkirmishTroupMovement.clickCountUpdater(this.lastCity, this.city)
-      expect(result).toEqual(5);
+      expect(result).toEqual(4);
     });
 
     it('resets clickCount for city I dont own', function() {
