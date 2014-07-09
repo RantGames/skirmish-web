@@ -78,12 +78,19 @@ describe("SkirmishApp", function () {
             spyOn(SkirmishGameState, 'setCurrentPlayerId');
             var fakeId = 2;
             var fakeData = {player_id: fakeId};
-            console.log(fakeData);
             SkirmishApp.updatePlayerId(fakeData);
-
             expect(SkirmishGameState.setCurrentPlayerId).toHaveBeenCalledWith(fakeId);
-        })
-    })
+        });
+    });
+
+    describe("joinNewGame()", function() {
+
+        it('calls joinNewGame in SkirmishApp', function() {
+            spyOn(SkirmishClient, 'joinNewGame');
+            SkirmishApp.joinNewGame();
+            expect(SkirmishClient.joinNewGame).toHaveBeenCalled()
+        });
+    });
 
     describe('checkVictory()', function () {
         it('checks SkirmishGameState to see if someone has won', function () {

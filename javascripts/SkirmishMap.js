@@ -64,7 +64,6 @@ var SkirmishMap = (function () {
     }
 
     function setupDomClickListener(cityOverlay) {
-        console.log('set up event for city ' + cityOverlay.overlay[0]);
         google.maps.event.addDomListener(cityOverlay.overlay[0], 'click', function () {
             SkirmishTroupMovement.clickHandler(cityOverlay.city);
         });
@@ -119,7 +118,14 @@ var SkirmishMap = (function () {
             }
             return cityDistance(city, ourCity);
         });
+
         return Math.min.apply(this, cityDistances);
+    }
+
+    function setupDomClickListener(cityOverlay) {
+        google.maps.event.addDomListener(cityOverlay.overlay[0], 'click', function() {
+            SkirmishTroupMovement.clickHandler(cityOverlay.city);
+        });
     }
 
     function getCitiesWithCloseNeighbours(cities, minDistance) {

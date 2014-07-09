@@ -46,7 +46,6 @@ var SkirmishApp = (function () {
     };
 
     publik.updatePlayerId = function (data) {
-        console.log(data);
         SkirmishGameState.setCurrentPlayerId(data.player_id);
     };
 
@@ -74,25 +73,3 @@ var SkirmishApp = (function () {
     return publik;
 }());
 
-
-// SkimishApp
-// Responsibilities
-//  Control the frontend Skirmish app
-//  Talk to SkirmishClient to authenticate
-//  Talk to SkirmishDOM to update the client ui
-//
-// Public API
-//  start()
-//   login_form.on submit try and login()
-//
-//  login()
-//   pull credentials from skirmishdom
-//   send them to SkirmishClient.login
-//   update the dom with the result
-//
-// updateGameState()
-//  pulls game state from SkirmishClient
-//  asks SkirmishGameState to process the game into workable game data
-//  displays all the cities
-//
-//

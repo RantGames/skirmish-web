@@ -1,4 +1,4 @@
-/*global $, jQuery, alert*/
+/*global $, jQuery, SkirmishDOM, alert*/
 
 "use strict";
 var SkirmishClient = (function () {
@@ -23,22 +23,20 @@ var SkirmishClient = (function () {
         });
     }
 
-    function sendChat(message) {
+    function sendChat(event) {
+        event.preventDefault();
+        var message = $('#chat_message').val();
         $.ajax({
             type: 'POST',
             url: endpoints.chat,
             data: { chat_message: message },
-            success: function(){console.log('chat sent')},
-            error: function(){console.log('chat fail')}
+            success: SkirmishDOM.flash('Chat message sent'),
+            failure: function () {SkirmishDOM.flash('Chat message failure')}
         });
     }
 
     function registerChatClick() {
-        $("#submit").on("click", function() {
-           event.preventDefault();
-           var message = $('#chat_message').val();
-           sendChat(message);
-       });
+        $("#submit").on("click", sendChat);
     };
 
     function joinNewGame(successCallback, errorCallback) {
