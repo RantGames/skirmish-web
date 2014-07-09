@@ -1,9 +1,11 @@
-/*global $, jQuery, alert, document, SkimishTroupMovement, SkirmishClient, SkirmishMap, SkirmishGameState, google, Handlebars */
+/*global $, jQuery, alert, document, SkirmishTroupMovement, SkirmishClient, SkirmishMap, SkirmishGameState, google, Handlebars */
 "use strict";
 
 var SkirmishMap = (function () {
-    var map, cityOverlayTemplate, miniCityOverlayTemplate, overlays;
+    var map, cityOverlayTemplate, miniCityOverlayTemplate, overlays, MIN_CITY_DISTANCE;
     overlays = [];
+
+    MIN_CITY_DISTANCE = 500;
 
     function compileTemplates() {
         cityOverlayTemplate = Handlebars.compile($("#city-overlay-template").html());
@@ -15,6 +17,8 @@ var SkirmishMap = (function () {
         overlays.forEach(function (overlay) {
             overlay.scaleTemplate(zoom);
         });
+
+        declusterCities(SkirmishGameState.cities(), MIN_CITY_DISTANCE / zoom);
     }
 
     function initialize() {
@@ -36,20 +40,22 @@ var SkirmishMap = (function () {
     }
 
     function displayCircle(city) {
-      var range = 1000
+        var range = 1000,
+            circleOptions,
+            cityCircle;
 
-      var circleOptions = {
-          strokeColor: "#000FFF",
-          strokeOpacity: 0.35,
-          strokeWeight: 10,
-          fillColor: "#0000FF",
-          fillOpacity: .25,
-          map: map,
-          center: new google.maps.LatLng(city.latLng[0],city.latLng[1]),
-          radius: range * 1000
+        circleOptions = {
+            strokeColor: "#000FFF",
+            strokeOpacity: 0.35,
+            strokeWeight: 10,
+            fillColor: "#0000FF",
+            fillOpacity: 0.25,
+            map: map,
+            center: new google.maps.LatLng(city.latLng[0], city.latLng[1]),
+            radius: range * 1000
         };
 
-        var cityCircle = new google.maps.Circle(circleOptions);
+        cityCircle = new google.maps.Circle(circleOptions);
         return cityCircle;
     }
 
@@ -57,14 +63,64 @@ var SkirmishMap = (function () {
         cityCircle.setMap(null);
     }
 
+    function setupDomClickListener(cityOverlay) {
+        google.maps.event.addDomListener(cityOverlay.overlay[0], 'click', function () {
+            SkirmishTroupMovement.clickHandler(cityOverlay.city);
+        });
+    }
+
+    function setupDomHoverListener(cityOverlay) {
+        google.maps.event.addDomListener(cityOverlay.overlay[0], 'mouseover', function () {
+            SkirmishTroupMovement.hoverHandler(cityOverlay.city);
+        });
+    }
 
     function displayCity(city) {
-        var cityOverlay = new SkirmishMap.CityOverlay(city)
+        var cityOverlay = new SkirmishMap.CityOverlay(city);
         overlays.push(cityOverlay);
         setupDomClickListener(cityOverlay);
         setupDomHoverListener(cityOverlay);
     }
 
+    // FIXME - copied from SkirmishTroupMovements, should be common
+
+    function rad(x) {
+        return x * Math.PI / 180;
+    }
+
+    function getDistance(p1, p2) {
+        var R,
+            dLat,
+            dLong,
+            a,
+            c,
+            d;
+
+        R = 6378137; // Earth’s mean radius in meter
+        dLat = rad(p2.lat - p1.lat);
+        dLong = rad(p2.lng - p1.lng);
+        a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
+            Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        d = R * c;
+        return d / 1000; // returns the distance in meter
+    }
+
+    function cityDistance(cityA, cityB) {
+        return getDistance({lat: cityA.latLng[0], lng: cityA.latLng[1]}, {lat: cityB.latLng[0], lng: cityB.latLng[1]});
+    }
+
+    function nearestOtherCityDistance(cities, ourCity) {
+        var cityDistances = cities.map(function (city) {
+            if (city === ourCity) {
+                return 10 * 10 * 10 * 10000000;
+            }
+            return cityDistance(city, ourCity);
+        });
+
+        return Math.min.apply(this, cityDistances);
+    }
 
     function setupDomClickListener(cityOverlay) {
         google.maps.event.addDomListener(cityOverlay.overlay[0], 'click', function() {
@@ -72,10 +128,63 @@ var SkirmishMap = (function () {
         });
     }
 
-    function setupDomHoverListener(cityOverlay) {
-        google.maps.event.addDomListener(cityOverlay.overlay[0], 'mouseover', function() {
-            SkirmishTroupMovement.hoverHandler(cityOverlay.city);
+    function getCitiesWithCloseNeighbours(cities, minDistance) {
+        console.log(minDistance);
+        return cities.filter(function (city) {
+            return nearestOtherCityDistance(cities, city) < minDistance;
         });
+    }
+
+    function getClosestNeighbour(cities, city) {
+        var closestCity = null,
+            minDistance = 0,
+            otherCityDistance;
+
+        cities.forEach(function (otherCity) {
+            if (otherCity === city) {
+                return false;
+            }
+
+            otherCityDistance = cityDistance(city, otherCity);
+
+            if (closestCity === null || otherCityDistance < minDistance) {
+                minDistance = otherCityDistance;
+                closestCity = otherCity;
+            }
+
+        });
+
+        return closestCity;
+    }
+
+    function moveCityAwayFromNeighbours(cities, city) {
+        // finds the closest neighbour
+        // finds distance between
+        // moves city that distance away again
+
+        var closestNeighbour = getClosestNeighbour(cities, city);
+
+        console.log('Moving ' + city.name + ' away from ' + closestNeighbour.name);
+
+        var distanceLat = closestNeighbour.latLng[0] - city.latLng[0];
+        var distanceLng = closestNeighbour.latLng[1] - city.latLng[1];
+
+        var moveFactor = 0.5;
+
+        city.latLng[0] -= distanceLat;
+        city.latLng[1] -= distanceLng;
+    }
+
+    function declusterCities(cities, minDistance) {
+        var nearCities = getCitiesWithCloseNeighbours(cities, minDistance),
+            moveCity = function (city) { moveCityAwayFromNeighbours(cities, city); };
+
+        while (nearCities.length > 0) {
+            console.log('remaining bad cities', nearCities.length);
+            nearCities.map(moveCity);
+
+            nearCities = getCitiesWithCloseNeighbours(cities);
+        }
     }
 
     function displayCities(cities) {
