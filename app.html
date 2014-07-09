@@ -4,12 +4,13 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <script src="http://fb.me/react-0.10.0.js"></script>
     <script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
-    <script src="http://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="/skirmish-web/javascripts/NotificationBox.js" type="text/jsx"></script>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
     <style>
       #notification-box {
         width:30%;
         height: 25%;
+        min-height: 25%;
         position: absolute;
         overflow: scroll;
         right: 0;
@@ -23,22 +24,17 @@
       .notice {
         color: lightblue;
       }
-    </style>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        setTimeout(function() {
-          var pusher = new Pusher('013b1cfdc9072c8dbe04');
-          var channel = pusher.subscribe('skirmish_channel');
-          SkirmishClient.getCurrentPlayerId(SkirmishClient.updatePlayerId);
-          React.renderComponent(new NotificationBox({
-            messages: SkirmishApp.messageBox.all,
-            channel:  channel,
-            playerId: SkirmishGameState.getCurrentPlayerId()
-          }), document.getElementById("notification-box"))
-        }, 1000);
 
-      });
-    </script>
+      #chat-input {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+
+      #chat-input input {
+        width: 100%;
+      }
+    </style>
 </head>
 
 
