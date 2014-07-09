@@ -7,7 +7,8 @@ describe("SkirmishClient", function () {
             spyOn($, 'ajax');
             this.move = {
                 gameId: 4,
-                originIds: [1, 2, 3],
+                originId: 6,
+                quantity: 3,
                 targetId: 2,
                 action: 'move_unit'
             };
@@ -35,11 +36,12 @@ describe("SkirmishClient", function () {
         it('sends the stringified move in the format expected by the server', function () {
             expect(JSON.parse(this.requestArgs.data)).toEqual({
                 move: {
-                    action: 'move_unit',
-                    origin_ids: [1, 2, 3],
-                    target_id: 2,
+                    action: this.move.action,
+                    origin_id: this.move.originId,
+                    target_id: this.move.targetId,
+                    quantity: this.move.quantity,
                 },
-                game_id: 4,
+                game_id: this.move.gameId,
             });
         });
     });

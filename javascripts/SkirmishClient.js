@@ -55,8 +55,9 @@ var SkirmishClient = (function () {
         var serverFormattedMove = {
             move: {
                 action: move.action,
-                origin_ids: move.originIds,
+                origin_id: move.originId,
                 target_id: move.targetId,
+                quantity: move.quantity,
             },
             game_id: move.gameId,
         };

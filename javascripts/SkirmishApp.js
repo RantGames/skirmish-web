@@ -3,10 +3,8 @@
 
 var SkirmishApp = (function () {
     var publik = {};
-    var hasMoved;
 
     function succesfulMove() {
-        hasMoved = true;
         SkirmishDOM.flash('Move submitted successfully. Waiting for other players.');
     }
 
@@ -15,22 +13,14 @@ var SkirmishApp = (function () {
     }
 
     publik.sendMove = function (rawMove) {
-        if (hasMoved) {
-            return false;
-        }
-
         SkirmishDOM.flash('Sending move');
 
-        var unitIds = SkirmishGameState.getUnitIdsForCity({
-            unitCount: rawMove.unitCount,
-            city: rawMove.originId,
-        });
-
         SkirmishClient.sendMove({
-            originIds: unitIds,
+            originId: rawMove.originId,
             targetId: rawMove.targetId,
             action: rawMove.moveType + '_unit',
             gameId: SkirmishGameState.gameId(),
+            quantity: rawMove.unitCount,
         }, succesfulMove, failedMove);
     };
 
@@ -38,7 +28,6 @@ var SkirmishApp = (function () {
     };
 
     publik.processUpdate = function (gameState) {
-        hasMoved = false;
         SkirmishDOM.flash('Processing');
 
         var cities;
