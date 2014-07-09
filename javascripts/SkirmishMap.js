@@ -32,6 +32,11 @@ var SkirmishMap = (function () {
         mapOptions = {
             center: new google.maps.LatLng(39.8282, -98.5795),
             disableDoubleClickZoom: true,
+            disableDefaultUI: true,
+            zoomControl: true,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.LEFT_CENTER
+            },
             streetViewControl: false,
             styles: style,
             zoom: 5

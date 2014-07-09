@@ -1,6 +1,33 @@
 html { height: 100% }
 body { height: 100%; margin: 0; padding: 0 }
-#map-canvas { height: 100% }
+#map-canvas { 
+    height: 100%;
+    position: relative; 
+    z-index: 1;
+}
+
+.logo   {
+    color: rgba(255,100,100,0.4);
+    z-index: 3;
+    margin-top: 0.5%;
+    margin-left: 1%;
+    font-family: 'Black Ops One', cursive;
+    font-size: 4em;
+    position: absolute;
+}
+
+#message-bar{
+    margin-top: 1%;
+    color: white;
+    font-family: arial;
+    font-weight: lighter;
+    position: absolute;
+    right: 1%;
+    z-index: 2;
+    background-color: rgba(1,1,1,0.1);
+    width: 17.5%;
+    text-align: center;
+}
 
 .mini-city-overlay img {
     border-radius: 20px;
@@ -56,29 +83,36 @@ body { height: 100%; margin: 0; padding: 0 }
     margin-right: auto;
 }
 
-.centered-text
-{
+#notification-box {
+    z-index: 2;
+    width: 17.5%%;
+    height: 50%;
+    right: 1%;
+    bottom: 2%;
+    position: absolute;
+    overflow: scroll;
+    color: white;
+    font-family: arial;
+    font-weight: lighter;
+    position: absolute;
+    background-color: rgba(1,1,1,0.1);
     text-align: center;
-};
-
-.message-bar
-{
-    width: 100%;
 }
 
-#notification-box {
-  background-color: white;
-  width:20%;
-  height: 15%;
-  position: absolute;
-  right: 0;
-  bottom: 0;
+#notification-box td {
+    text-align: left;
+}
+
+table {
+    font-size: 12px;
+    font-family: arial;
+    font-weight: lighter; 
 }
 
 .error {
-  color: #FF9494;
+  color: #c0392b;
 }
 
 .notice {
-  color: lightblue;
+  color: #2980b9;
 }
