@@ -27,9 +27,9 @@ describe("Troup Movement and Attack", function () {
 
     it('updates last city clicked', function () {
       spyOn(SkirmishTroupMovement, 'validMoveClick').and.returnValue(true);
-      SkirmishTroupMovement.setLastCityClicked(this.lastCity)
+      SkirmishTroupMovement.setPreviousCityClicked(this.lastCity)
       SkirmishTroupMovement.clickHandler(this.city);
-      expect(SkirmishTroupMovement.lastCityClicked()).toEqual(this.city)
+      expect(SkirmishTroupMovement.previousCityClicked()).toEqual(this.city)
     })
 
   });
@@ -84,7 +84,7 @@ describe("Troup Movement and Attack", function () {
 
     beforeEach(function () {
       this.city = {id:1, playerId: 2}
-      this.lastCity = {id:1, playerId: 2}
+      this.lastCity = {id:1, playerId: 2, units:[{id:1},{id:2},{id:3},{id:4},{id:5}]}
       SkirmishTroupMovement.setClickCount(3);
       spyOn(SkirmishGameState, 'getCurrentPlayerId').and.returnValue(2)
     });
@@ -96,7 +96,7 @@ describe("Troup Movement and Attack", function () {
 
     it('resets clickCount to zero when click on other cities twice', function (){
       this.city = {id:1, playerId: 3}
-      this.lastCity = {id:2, playerId: 3}
+      this.lastCity = {id:2, playerId: 3, units:[{id:1},{id:2},{id:3},{id:4},{id:5}]}
       var result = SkirmishTroupMovement.clickCountUpdater(this.lastCity, this.city)
       expect(result).toEqual(0);
     });
@@ -119,11 +119,18 @@ describe("Troup Movement and Attack", function () {
       expect(result).toEqual(1);
     });
 
+    it('resets clickCount to 1 when click on opening city', function () {
+      this.city = {id:2, playerId: 2, units:[{id:1},{id:2},{id:3},{id:4},{id:5}]}
+      this.lastCity = {id:-1, playerId: 2, units:[{id:1},{id:2},{id:3},{id:4},{id:5}]}
+      var result = SkirmishTroupMovement.clickCountUpdater(this.lastCity, this.city)
+      expect(result).toEqual(1);
+    });
+
   });
 
   it('calculates Units from number of clicks', function() {
     var city = {units:{length:6}};
-    expect(SkirmishTroupMovement.calculateUnits(city, 4)).toEqual(5)
+    expect(SkirmishTroupMovement.calculateUnits(city, 6)).toEqual(6)
   });
 
 });
