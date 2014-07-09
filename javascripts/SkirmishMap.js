@@ -2,11 +2,9 @@
 "use strict";
 
 var SkirmishMap = (function () {
-<<<<<<< HEAD
     var map, cityOverlayTemplate, miniCityOverlayTemplate, overlays, smallestCityOverlayTemplate;
-=======
     var map, cityOverlayTemplate, miniCityOverlayTemplate, overlays, MIN_CITY_DISTANCE;
->>>>>>> 0378c7a4f6cd29eb944b011eb51fc8e8b2bb0e0c
+
     overlays = [];
 
     MIN_CITY_DISTANCE = 500;
@@ -143,8 +141,9 @@ var SkirmishMap = (function () {
     ];
 
     function displayCircle(city) {
-<<<<<<< HEAD
+
       var range = 1000
+      var cityCircle;
 
       var circleOptions = {
           strokeColor: "red",
@@ -155,21 +154,6 @@ var SkirmishMap = (function () {
           map: map,
           center: new google.maps.LatLng(city.latLng[0],city.latLng[1]),
           radius: range * 1000
-=======
-        var range = 1000,
-            circleOptions,
-            cityCircle;
-
-        circleOptions = {
-            strokeColor: "#000FFF",
-            strokeOpacity: 0.35,
-            strokeWeight: 10,
-            fillColor: "#0000FF",
-            fillOpacity: 0.25,
-            map: map,
-            center: new google.maps.LatLng(city.latLng[0], city.latLng[1]),
-            radius: range * 1000
->>>>>>> 0378c7a4f6cd29eb944b011eb51fc8e8b2bb0e0c
         };
 
         cityCircle = new google.maps.Circle(circleOptions);
