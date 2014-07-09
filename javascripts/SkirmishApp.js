@@ -10,7 +10,7 @@ var SkirmishApp = (function () {
 
     function failedMove(data) {
         if (data.responseJSON) {
-            SkirmishDOM.flash(data.responseJSON.message);
+            SkirmishDOM.flash('Move send failed');
         }
     }
 
@@ -41,7 +41,7 @@ var SkirmishApp = (function () {
         SkirmishClient.getCurrentPlayerId(publik.updatePlayerId);
 
         SkirmishTroupMovement.setDefaults();
-        
+
         SkirmishMap.clearOverlays();
 
         SkirmishMap.displayCities(cities);
