@@ -34,7 +34,6 @@ var MessageWindow = React.createClass({
 
 var ChatInput = React.createClass({
   sendChatMessage: function() {
-    console.log('aaa');
     var message = this.refs.chatBox.getDOMNode().value.trim();
 
     if(!message) return false;
