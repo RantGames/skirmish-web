@@ -51,6 +51,7 @@ describe("SkirmishApp", function () {
                 originId: 1,
                 targetId: 2,
                 moveType: 'move',
+                quantity: 5,
             };
             this.fakeUnitIds = [4, 5, 6];
 
@@ -61,16 +62,13 @@ describe("SkirmishApp", function () {
             SkirmishApp.sendMove(testMove);
         });
 
-        it("gets the ids of the units to move", function () {
-            expect(SkirmishGameState.getUnitIdsForCity).toHaveBeenCalledWith({city: 1, unitCount: 5});
-        });
-
         it("sends the move to SkirmishClient to send to the server", function () {
             expect(SkirmishClient.sendMove).toHaveBeenCalledWith({
-                originIds: this.fakeUnitIds,
+                originId: 1,
                 targetId: 2,
                 action: 'move_unit',
                 gameId: 7,
+                quantity: 5,
             }, jasmine.any(Function), jasmine.any(Function));
         });
     });
