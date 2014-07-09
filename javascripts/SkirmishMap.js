@@ -2,11 +2,12 @@
 "use strict";
 
 var SkirmishMap = (function () {
-    var map, cityOverlayTemplate, miniCityOverlayTemplate, overlays;
+    var map, cityOverlayTemplate, miniCityOverlayTemplate, overlays, smallestCityOverlayTemplate;
     overlays = [];
 
     function compileTemplates() {
         cityOverlayTemplate = Handlebars.compile($("#city-overlay-template").html());
+        smallestCityOverlayTemplate = Handlebars.compile($("#smallest-city-overlay-template").html());
         miniCityOverlayTemplate = Handlebars.compile($("#mini-city-overlay-template").html());
     }
 
@@ -27,7 +28,7 @@ var SkirmishMap = (function () {
             disableDoubleClickZoom: true,
             streetViewControl: false,
             styles: style,
-            zoom: 7
+            zoom: 5
         };
 
         map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
@@ -211,9 +212,13 @@ var SkirmishMap = (function () {
     };
 
     CityOverlay.prototype.scaleTemplate = function (zoom) {
-        if (zoom <= 5) {
+        if(zoom <= 4) {
+            this.renderSmallestTemplate();
+        }
+        else if (zoom <= 5) {
             this.renderMiniTemplate();
-        } else {
+        } 
+        else {
             this.renderFullTemplate();
         }
     };
@@ -241,6 +246,14 @@ var SkirmishMap = (function () {
             gravatar: this.gravatarURL()
         }));
     };
+
+    CityOverlay.prototype.renderSmallestTemplate = function () {
+        this.renderHTML(smallestCityOverlayTemplate({
+            city: this.city,
+            gravatar: this.gravatarURL()
+        }));
+    };
+
 
     CityOverlay.prototype.onRemove = function () {
         this.overlay.remove();

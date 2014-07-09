@@ -14,7 +14,27 @@ body { height: 100%; margin: 0; padding: 0 }
     margin: 1px;
 }
 
+.smallest-city-overlay h4 {
+    visibility:hidden;
+    margin: 1px;
+    font-size: 12px;
+    font-weight: lighter;
+}
 
+.smallest-city-overlay:hover h4 {
+    visibility:visible;
+    font-size: 12px;
+    font-weight: lighter;
+    color: white;
+    margin: 1px;
+}
+
+.smallest-city-overlay img {
+    height: 14px;
+    width: 14px;
+    border-radius: 20px;
+    box-shadow: 1px 1px .5px #CCA955;
+}
 
 .big-city-overlay img {
     border-radius: 20px;
