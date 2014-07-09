@@ -2,9 +2,27 @@ html { height: 100% }
 body { height: 100%; margin: 0; padding: 0 }
 #map-canvas { height: 100% }
 
-.big-city-overlay
-{
-    border: 2px solid #EAEAEA;
+.mini-city-overlay img {
+    border-radius: 20px;
+    box-shadow: 3px 4px 1px #CCA955;
+}
+
+.mini-city-overlay h4 {
+    font-size: 12px;
+    font-weight: lighter;
+    color: white;
+    margin: 1px;
+}
+
+
+
+.big-city-overlay img {
+    border-radius: 20px;
+}
+
+.big-city-overlay {
+    box-shadow: 3px 4px 1px #CCA955;
+    background-color: white;
     border-radius: 5px;
     padding: 5px;
     text-align: center;
@@ -26,4 +44,20 @@ body { height: 100%; margin: 0; padding: 0 }
 .message-bar
 {
     width: 100%;
+}
+
+#notification-box {
+  width:20%;
+  height: 15%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.error {
+  color: #FF9494;
+}
+
+.notice {
+  color: lightblue;
 }

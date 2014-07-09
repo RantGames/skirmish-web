@@ -18,7 +18,6 @@ var SkirmishMap = (function () {
     }
 
     function initialize() {
-        console.log("SkirmishMap initializing");
         var mapOptions;
 
         compileTemplates();
@@ -27,7 +26,8 @@ var SkirmishMap = (function () {
             center: new google.maps.LatLng(39.8282, -98.5795),
             disableDoubleClickZoom: true,
             streetViewControl: false,
-            zoom: 5
+            styles: style,
+            zoom: 7
         };
 
         map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
@@ -35,15 +35,113 @@ var SkirmishMap = (function () {
         google.maps.event.addListener(map, 'zoom_changed', zoomChanged);
     }
 
+    var style= [ 
+        {
+            featureType: "water",
+            elementType: "geometry",
+            stylers: [
+                {color: "#AAE0FA"}
+            ]
+        },
+        {
+            featureType: "landscape",
+            elementType: "geometry",
+            stylers: [
+                {color: "#FFDC88"}
+            ]
+        },
+        {
+            featureType: "administrative",
+            elementType: "geometry",
+            stylers: [
+                {color: "#FFDC88"},
+                {weight: 0.5}
+            ]
+        },
+        {
+            featureType: "landscape.natural.terrain",
+            elementType: "geometry",
+            stylers: [
+                {color: "#F7D480"},
+                {weight: 0.5}
+            ]
+        },
+        {
+            featureType: "administrative.country",
+            elementType: "label",
+            stylers: [
+                { color: "#B3903C" },
+            ]
+        },
+        {
+            featureType: "administrative.country",
+            elementType: "label.text",
+            stylers: [
+                { color: "#FFFFFF" },
+            ]
+        },
+        {
+            featureType: "administrative.province",
+            elementType: "label.text.stroke",
+            stylers: [
+                { visibility: "off" }
+            ]
+        },
+      
+        {
+            featureType: "administrative.locality",
+            elementType: "label",
+            stylers: [
+                {visibility: "off"}
+            ]
+        },
+        {
+            featureType: "administrative.province",
+            elementType: "geometry",
+            stylers: [
+                {color: "#FFFFFF" },
+            ]
+        },
+        {
+            featureType: "administrative",
+            elementType: "labels.text.stroke",
+            stylers: [
+                { visibility: "off" }
+            ]
+        },
+        {
+            featureType: "road",
+            elementType: "labels",
+            stylers: [
+                { visibility: "off" }
+            ]
+        },
+        {
+            featureType: "road",
+            elementType: "geometry",
+            stylers: [
+                { visibility: "on" },
+                { color: "#E6C36F"}
+            ]
+        },
+      
+        {
+            featureType: "poi",
+            stylers: [
+                { visibility: "off" }
+            ]
+        },
+    ];
+
     function displayCircle(city) {
       var range = 1000
 
       var circleOptions = {
-          strokeColor: "#000FFF",
-          strokeOpacity: 0.35,
-          strokeWeight: 10,
-          fillColor: "#0000FF",
-          fillOpacity: .25,
+          strokeColor: "red",
+          strokeOpacity: 0.25,
+          strokeWeight: 2,
+          fillColor: "red",
+          fillOpacity: .09,
           map: map,
           center: new google.maps.LatLng(city.latLng[0],city.latLng[1]),
           radius: range * 1000
@@ -67,7 +165,7 @@ var SkirmishMap = (function () {
 
 
     function setupDomClickListener(cityOverlay) {
-        console.log('set up event for city '+cityOverlay.overlay[0]);
+
         google.maps.event.addDomListener(cityOverlay.overlay[0], 'click', function() {
             SkirmishTroupMovement.clickHandler(cityOverlay.city);
         });
@@ -140,6 +238,7 @@ var SkirmishMap = (function () {
 
     CityOverlay.prototype.renderMiniTemplate = function () {
         this.renderHTML(miniCityOverlayTemplate({
+            city: this.city,
             gravatar: this.gravatarURL()
         }));
     };
@@ -159,8 +258,7 @@ var SkirmishMap = (function () {
         this.overlay.css({
             top: (position.y - this.overlay.height() / 2) + 'px',
             left: (position.x - this.overlay.width() / 2) + 'px',
-            position: 'absolute',
-            background: 'white'
+            position: 'absolute'
         });
     };
 
