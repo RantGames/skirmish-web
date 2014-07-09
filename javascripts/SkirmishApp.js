@@ -41,6 +41,8 @@ var SkirmishApp = (function () {
         SkirmishClient.getCurrentPlayerId(publik.updatePlayerId);
 
         SkirmishTroupMovement.setDefaults();
+        
+        SkirmishMap.clearOverlays();
 
         SkirmishMap.displayCities(cities);
 
