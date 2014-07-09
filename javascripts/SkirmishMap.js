@@ -21,7 +21,6 @@ var SkirmishMap = (function () {
             overlay.scaleTemplate(zoom);
         });
 
-        declusterCities(SkirmishGameState.cities(), MIN_CITY_DISTANCE / zoom);
     }
 
     function initialize() {
